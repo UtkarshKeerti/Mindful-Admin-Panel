@@ -1,0 +1,29 @@
+.buttonClass {
+  font-size: 1rem;
+  border-radius: 60px;
+  padding: 15px 35px;
+  transition: all 0.2s linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.primaryBtn {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: var(--box-shadow-3);
+}
+.primaryBtn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.secondaryBtn {
+}
+
+.btnIcon {
+  width: 25px;
+  height: 20px;
+  margin-right: 15px;
+}

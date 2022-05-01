@@ -14,9 +14,10 @@ import Conversations from './pages/Conversations';
 import Members from './pages/Members';
 import Speakers from './pages/Speakers';
 import Publications from './pages/Publications';
-import UserMessages from './pages/UserMessages'
-import Page404 from './pages/Page404'
+import UserMessages from './pages/UserMessages';
+import Page404 from './pages/Page404';
 
+import Colorpallete from './components/Colorpallete'
 
 const Routes = () => {
   return useRoutes([
@@ -26,14 +27,15 @@ const Routes = () => {
       children: [
         { path: '/', element: <Login /> },
         { path: 'reset', element: <ResetPassword /> },
-        { path: '404', element: <Page404 /> }
+        { path: '404', element: <Page404 /> },
+        { path: 'colors', element: <Colorpallete /> }
       ]
     },
     {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'conversations', element: <Conversations /> },
+        { path: 'dashboard', element: <Conversations /> },
         { path: 'members', element: <Members /> },
         { path: 'speakers', element: <Speakers /> },
         { path: 'publications', element: <Publications /> },
