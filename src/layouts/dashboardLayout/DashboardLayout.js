@@ -83,15 +83,16 @@ const DashboardLayout = (props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor: 'background.main' }}>
+
       <AppBar
         position="fixed"
         sx={{
           width: { lg: `calc(100% - ${drawerWidth}px)` },
           ml: { lg: `${drawerWidth}px` },
           maxHeight: `${appBarHeight}px`,
-          backgroundColor: '#2063cf'
         }}
+        color="primary"
       >
         <Toolbar>
           <IconButton
@@ -137,12 +138,16 @@ const DashboardLayout = (props) => {
         </Drawer>
       </Box>
 
-      <Box sx={{
-        width: { lg: `calc(100% - ${drawerWidth}px)` },
-        // ml: { lg: `${drawerWidth}px` },
-        mt: `${appBarHeight}px`,
-        p: { xs: '2rem 1.5rem', lg: '2rem' }
-      }}>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: '2000px',
+          minHeight: `calc(100vh - ${appBarHeight}px)`,
+          // ml: { lg: `${drawerWidth}px` },
+          mt: `${appBarHeight}px`,
+          p: { xs: '2rem 1.5rem', lg: '2rem' },
+        }}
+      >
         <Outlet />
       </Box>
     </Box>

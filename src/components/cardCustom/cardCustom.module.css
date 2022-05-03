@@ -1,0 +1,29 @@
+.cardWrapper {
+  box-shadow: var(--box-shadow-1) !important;
+  border-radius: 10px !important;
+}
+
+.heading {
+  max-height: 32px;
+  /* Truncate single line */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.body {
+  max-height: 40px;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 600px) {
+  .cardWrapper .heading {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .cardWrapper .body {
+    font-size: 0.75rem;
+  }
+}

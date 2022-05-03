@@ -35,7 +35,7 @@ const Routes = () => {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'dashboard', element: <Conversations /> },
+        { path: '/dashboard', element: <Conversations /> },
         { path: 'members', element: <Members /> },
         { path: 'speakers', element: <Speakers /> },
         { path: 'publications', element: <Publications /> },

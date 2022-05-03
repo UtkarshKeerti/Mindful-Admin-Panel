@@ -1,9 +1,9 @@
 :root {
   /* Color palette */
   --color-primary: #2063cf;
-  --color-primary-dark: hsl(227, 89%, 21%);
-  --color-primary-light: hsl(217, 52%, 81%);
-  --color-primary-lightest: hsl(216, 66%, 90%);
+  --color-primary-dark: #061b65;
+  --color-primary-light: #b5c9e8;
+  --color-primary-lightest: #d5e2f6;
 
   --color-grey: hsl(217, 25%, 90%);
   --color-grey-light: #f6f7f9;
@@ -24,8 +24,8 @@
   --box-shadow-3: rgb(32 101 209 / 24%) 0px 8px 16px 0px;
 
   /* Fonts */
-  --font-family-2: "Public Sans", sans-serif;
   --font-family-1: "Poppins", sans-serif;
+  --font-family-2: "Public Sans", sans-serif;
 }
 
 /* TEST Color palletes */
@@ -58,6 +58,12 @@
 }
 .color-grey-darker {
   background-color: var(--color-grey-darker);
+}
+
+/* Page heading */
+.pageheading {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 /* Custom Scrollbar */

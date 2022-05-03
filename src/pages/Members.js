@@ -1,10 +1,16 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
 
 const Members = () => {
+
+  const [membersCard, setMembersCard] = useState([])
+  useEffect(() => {
+    setMembersCard([])
+  }, [])
+
   return (
-    <div>
-      <h2>Members</h2>
-    </div>
+    <>
+      <h2 className={'pageheading'}>Members</h2>
+    </>
   )
 }
 

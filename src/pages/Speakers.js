@@ -1,10 +1,16 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
 
 const Speakers = () => {
+
+  const [speakers, setSpeakers] = useState([])
+  useEffect(() => {
+
+  }, [])
+
   return (
-    <div>
-      <h2>Speakers</h2>
-    </div>
+    <>
+      <h2 className={'pageheading'}>Speakers</h2>
+    </>
   )
 }
 
