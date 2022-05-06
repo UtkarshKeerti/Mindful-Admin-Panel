@@ -12,12 +12,15 @@ import {
   ListItemIcon,
   Toolbar,
   Divider,
-  IconButton
+  IconButton,
+  Avatar
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import MailIcon from '@mui/icons-material/Mail';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+
+import MHLogo from '../../CCMH-logo.png';
 
 // import styles from './dashboardLayout.module.css';
 
@@ -58,8 +61,13 @@ const DashboardLayout = (props) => {
   const drawer = (
     <>
       {/* Replace with Logo */}
-      <Toolbar />
-      <Toolbar />
+      <Toolbar sx={{ display: 'flex', justifyContent: 'center', padding: '1.5rem' }}>
+        <Avatar
+          alt="Site icon"
+          src={MHLogo}
+          sx={{ width: '100px', height: '100px' }}
+        />
+      </Toolbar>
       {/* ----- */}
 
       <Divider />
