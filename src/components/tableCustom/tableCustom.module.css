@@ -1,0 +1,14 @@
+.tableContainer {
+  border-radius: 10px;
+  border: 1px solid var(--color-grey);
+  box-shadow: var(--box-shadow-1);
+  /* max-width: max-content; */
+  overflow-x: auto;
+}
+
+.dataGridContainer {
+  border-radius: 10px;
+  border: 1px solid var(--color-grey);
+  box-shadow: var(--box-shadow-1);
+  overflow: hidden;
+}
