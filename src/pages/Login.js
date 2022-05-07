@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
+import LoginLayout from '../layouts/loginLayout/LoginLayout';
 
 const Login = () => {
   return (
-    <div>
-      <h2>Login</h2>
-    </div>
+    <LoginLayout />
   )
 }
 

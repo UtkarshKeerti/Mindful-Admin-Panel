@@ -1,0 +1,42 @@
+.pageWrapper {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.itemContainer {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.itemImgContainer {
+  overflow: hidden;
+}
+.itemImgContainer img {
+  height: 100%;
+}
+
+.heading {
+  text-align: center;
+  margin: 2rem;
+}
+
+.formContainer input {
+  width: 100%;
+  font-size: 14px;
+}
+
+.formContainer .textField {
+  margin: 1.5rem 0;
+}
+
+@media screen and (max-width: 900px) {
+  .pageWrapper .itemImgContainer {
+    display: none;
+  }
+}

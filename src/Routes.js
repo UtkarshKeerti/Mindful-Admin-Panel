@@ -17,7 +17,7 @@ import Publications from './pages/Publications';
 import UserMessages from './pages/UserMessages';
 import Page404 from './pages/Page404';
 
-import Colorpallete from './components/Colorpallete'
+import Colorpallete from './components/Colorpallete';
 
 const Routes = () => {
   return useRoutes([
