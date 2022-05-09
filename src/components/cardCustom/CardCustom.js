@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  useNavigate
+} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,15 +10,21 @@ import { CardActionArea } from '@mui/material';
 
 import styles from './cardCustom.module.css'
 
-const CardCustom = ({ heading, body, image }) => {
+const CardCustom = ({ cardId, heading, body, image, baseRoute }) => {
+  const navigate = useNavigate();
 
   const truncate = (str, char) => {
     return str?.length > char ? str.slice(0, char) + "..." : str
   }
 
+  const handleClick = (id) => {
+    navigate(`${baseRoute}/${id}`);
+  }
+
   return (
     <Card
       className={styles.cardWrapper}
+      onClick={() => handleClick(cardId)}
     >
       <CardActionArea>
         <CardMedia

@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import TableDatGrid from '../components/tableCustom/TableDatGrid';
+import {
+  Box,
+  Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import TableDataGrid from '../components/tableCustom/TableDataGrid';
 
 const Speakers = () => {
 
   const [membersColumns, setMembersColumns] = useState([]);
-  const [membersRows, setMembersRows] = useState([])
+  const [membersRows, setMembersRows] = useState([]);
 
   useEffect(() => {
 
@@ -63,8 +68,16 @@ const Speakers = () => {
 
   return (
     <>
-      <h2 className={'pageheading'}>Speakers</h2>
-      <TableDatGrid
+      <Box className={'pageheading'}>
+        <h2>Speakers</h2>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add
+        </Button>
+      </Box>
+      <TableDataGrid
         tableColumns={membersColumns}
         tableRows={membersRows}
         rowsPerPageOptions={15}

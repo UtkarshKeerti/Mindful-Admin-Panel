@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react';
+import {
+  Box,
+  Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import PageLayout from '../layouts/pageLayout/PageLayout';
 
 const Publications = () => {
@@ -37,7 +42,15 @@ const Publications = () => {
 
   return (
     <>
-      <h2 className={'pageheading'}>Publications</h2>
+      <Box className={'pageheading'}>
+        <h2>Publications</h2>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add
+        </Button>
+      </Box>
       <PageLayout pageData={publicationsData} />
     </>
   )

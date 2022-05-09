@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import PageLayout from '../layouts/pageLayout/PageLayout';
+import {
+  Box,
+  Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import PageLayout from '../../layouts/pageLayout/PageLayout';
 
 const Conversations = () => {
 
@@ -7,26 +12,31 @@ const Conversations = () => {
   useEffect(() => {
     setConversationsCard([
       {
+        id: 111,
         heading: 'Design & Culture',
         body: 'Design & culture description',
         image: ''
       },
       {
+        id: 112,
         heading: 'Canada Celebrates foDDDDBCFRTG ais dox',
         body: 'Canada Celebrates folklore decription aso c,,a..sdio calks',
         image: ''
       },
       {
+        id: 113,
         heading: 'Design & Culture',
         body: 'Design & culture description',
         image: ''
       },
       {
+        id: 114,
         heading: 'Canada Celebrates folklore asnico ais dox',
         body: 'Canada Celebrates folklore decravsf asjn ca osidj oic aoisd iption aso Celebrates folklore decription aso cio calks Celebrates folklore decription aso c',
         image: ''
       },
       {
+        id: 115,
         heading: 'Design & Culture',
         body: 'Design & culture description',
         image: ''
@@ -37,8 +47,19 @@ const Conversations = () => {
 
   return (
     <>
-      <h2 className={'pageheading'}>Conversations</h2>
-      <PageLayout pageData={conversationsCard} />
+      <Box className={'pageheading'}>
+        <h2>Conversations</h2>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add
+        </Button>
+      </Box>
+      <PageLayout
+        pageData={conversationsCard}
+        baseRoute={'/dashboard'}
+      />
     </>
   )
 }

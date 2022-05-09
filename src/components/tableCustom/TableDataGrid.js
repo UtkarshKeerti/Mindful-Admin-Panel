@@ -2,7 +2,7 @@ import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import styles from './tableCustom.module.css';
 
-const TableDatGrid = ({ tableColumns, tableRows, rowsPerPageOptions }) => {
+const TableDataGrid = ({ tableColumns, tableRows, rowsPerPageOptions }) => {
   return (
     <div className={styles.dataGridContainer} style={{ height: '400px', width: '100%' }}>
       <DataGrid
@@ -17,4 +17,4 @@ const TableDatGrid = ({ tableColumns, tableRows, rowsPerPageOptions }) => {
   )
 }
 
-export default TableDatGrid
+export default TableDataGrid

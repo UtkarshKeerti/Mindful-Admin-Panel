@@ -20,7 +20,7 @@ const TableCustom = ({ tableRowData, tableColumnData }) => {
             {
               tableColumnData && tableColumnData.map((col, i) =>
                 <TableCell
-                  key={col.field}
+                  key={`table-head-${i}`}
                   sx={{ width: `${col.width}px` }}
                 >
                   {col.headerName}
@@ -32,7 +32,7 @@ const TableCustom = ({ tableRowData, tableColumnData }) => {
         <TableBody>
           {tableRowData && tableRowData.map((row, i) => (
             <TableRow
-              key={i}
+              key={`table-row-${i}`}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               {
@@ -40,7 +40,7 @@ const TableCustom = ({ tableRowData, tableColumnData }) => {
                   Object.keys(row).map((key, i) =>
                     key == cell.field &&
                     <TableCell
-                      key={i}
+                      key={`cell-${i}`}
                       sx={{ width: `${cell.width}px` }}
                     >
                       {

@@ -10,7 +10,8 @@ import AuthLayout from './layouts/authLayout/AuthLayout';
 // Pages
 import Login from './pages/Login';
 import ResetPassword from './pages/ResetPassword';
-import Conversations from './pages/Conversations';
+import Conversations from './pages/Conversations/Conversations';
+import ConvoDetails from './pages/Conversations/ConvoDetails';
 import Members from './pages/Members';
 import Speakers from './pages/Speakers';
 import Publications from './pages/Publications';
@@ -32,10 +33,11 @@ const Routes = () => {
       ]
     },
     {
-      path: '/dashboard',
+      path: 'dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: '/dashboard', element: <Conversations /> },
+        { path: '', element: <Conversations /> },
+        { path: ':id', element: <ConvoDetails /> },
         { path: 'members', element: <Members /> },
         { path: 'speakers', element: <Speakers /> },
         { path: 'publications', element: <Publications /> },

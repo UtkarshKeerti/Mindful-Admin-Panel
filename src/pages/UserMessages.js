@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import TableCustom from '../components/tableCustom/TableCustom';
+import {
+  Box,
+  Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import TableDataGrid from '../components/tableCustom/TableDataGrid';
 
 const UserMessages = () => {
   const [tableHeading, setTableHeading] = useState([
@@ -7,11 +12,6 @@ const UserMessages = () => {
       field: 'id',
       headerName: 'ID',
       width: 60
-    },
-    {
-      field: 'image',
-      headerName: '',
-      width: 80
     },
     {
       field: 'name',
@@ -27,31 +27,26 @@ const UserMessages = () => {
   const [membersData, setMembersData] = useState([
     {
       id: '',
-      image: '',
       name: "Stephen Fai",
       message: "ASmdasoc aso dasdcasdgew12ygfc",
     },
     {
       id: '',
-      image: '',
       name: "Roger William Connah",
       message: "ASmdasoc aso dasdcasdgew12ygfc",
     },
     {
       id: '',
-      image: '',
       name: "Katie Graham",
       message: "ASmdasoc aso dasdcasdgew12ygfc",
     },
     {
       id: '',
-      image: '',
       name: "Kurt Espersen-Peters",
       message: "ASmdasoc aso dasdcasdgew12ygfc",
     },
     {
       id: '',
-      image: '',
       name: "Pallavi Swaranjali",
       message: "ASmdasoc aso dasdcasdgew12ygfc",
     },
@@ -59,10 +54,19 @@ const UserMessages = () => {
 
   return (
     <>
-      <h2 className={'pageheading'}>User Messages</h2>
-      <TableCustom
-        tableRowData={membersData}
-        tableColumnData={tableHeading}
+      <Box className={'pageheading'}>
+        <h2>User Messages</h2>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add
+        </Button>
+      </Box>
+      <TableDataGrid
+        tableRows={membersData}
+        tableColumns={tableHeading}
+        rowsPerPageOptions={15}
       />
     </>
   )

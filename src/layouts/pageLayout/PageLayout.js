@@ -4,7 +4,7 @@ import CardCustom from '../../components/cardCustom/CardCustom';
 
 // import styles from './pageLayout.module.css';
 
-const PageLayout = ({ pageData }) => {
+const PageLayout = ({ pageData, baseRoute }) => {
 
   return (
     <Grid container spacing={{ xs: 2, sm: 4 }}>
@@ -23,6 +23,8 @@ const PageLayout = ({ pageData }) => {
               heading={card.heading}
               body={card.body && card.body}
               image={card.image}
+              cardId={card.id}
+              baseRoute={baseRoute}
             />
           </Grid>
         )

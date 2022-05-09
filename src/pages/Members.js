@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import TableDatGrid from '../components/tableCustom/TableDatGrid';
+import {
+  Box,
+  Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import TableDataGrid from '../components/tableCustom/TableDataGrid';
 // import TableCustom from '../components/tableCustom/TableCustom';
 
 const Members = () => {
@@ -92,9 +97,17 @@ const Members = () => {
 
   return (
     <>
-      <h2 className={'pageheading'}>Members</h2>
+      <Box className={'pageheading'}>
+        <h2>Members</h2>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add
+        </Button>
+      </Box>
       {/* <TableCustom tableData={membersData} /> */}
-      <TableDatGrid
+      <TableDataGrid
         tableColumns={membersColumns}
         tableRows={membersRows}
         rowsPerPageOptions={15}
