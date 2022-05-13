@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../../components/tableCustom/TableDataGrid';
+// import TableCustom from '../../components/tableCustom/TableCustom';
 
 const EventsLayout = () => {
 
@@ -28,7 +29,7 @@ const EventsLayout = () => {
     {
       field: 'dateTime',
       headerName: 'Date & Time',
-      width: 200,
+      width: 230,
     }
   ];
 
@@ -40,7 +41,7 @@ const EventsLayout = () => {
       dateTime: "12-03-2022 | 3:00pm PST"
     },
     {
-      id: 2,
+      id: 6,
       name: "Event - 002",
       description: "Event 002 description",
       dateTime: "21-04-2022 | 4:30pm PST"
@@ -61,7 +62,13 @@ const EventsLayout = () => {
         tableColumns={eventsColumn}
         tableRows={eventsRow}
         rowsPerPageOptions={15}
+        // checkbox
+        baseRoute={'/dashboard/event'}
       />
+      {/* <TableCustom 
+        tableColumnData={eventsColumn}
+        tableRowData={eventsRow}
+      /> */}
     </>
   )
 }

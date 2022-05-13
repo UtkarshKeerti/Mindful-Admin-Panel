@@ -5,10 +5,15 @@
   /* max-width: max-content; */
   overflow-x: auto;
 }
+.tableRow {
+  cursor: pointer;
+}
+.tableRow:hover {
+  background-color: var(--color-grey);
+}
 
 .dataGridContainer {
   border-radius: 10px;
-  border: 1px solid var(--color-grey);
-  box-shadow: var(--box-shadow-1);
+  box-shadow: var(--box-shadow-1) !important;
   overflow: hidden;
 }

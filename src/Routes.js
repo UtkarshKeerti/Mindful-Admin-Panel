@@ -6,6 +6,7 @@ import {
 // Layouts
 import DashboardLayout from './layouts/dashboardLayout/DashboardLayout';
 import AuthLayout from './layouts/authLayout/AuthLayout';
+import DetailsPageLayout from './layouts/detailsPageLayout/DetailsPageLayout';
 
 // Pages
 import Login from './pages/Login';
@@ -42,6 +43,8 @@ const Routes = () => {
         { path: 'speakers', element: <Speakers /> },
         { path: 'publications', element: <Publications /> },
         { path: 'messages', element: <UserMessages /> },
+        { path: 'event', element: <DetailsPageLayout />, },
+        { path: 'event/:id', element: <DetailsPageLayout />, },
       ]
     },
     { path: '*', element: <Navigate to='/404' replace /> }

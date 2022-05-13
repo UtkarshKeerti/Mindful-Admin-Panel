@@ -12,6 +12,10 @@ import styles from './tableCustom.module.css';
 
 const TableCustom = ({ tableRowData, tableColumnData }) => {
 
+  const handleRoute = () => {
+
+  }
+
   return (
     <Box className={styles.tableContainer}>
       <Table>
@@ -34,17 +38,19 @@ const TableCustom = ({ tableRowData, tableColumnData }) => {
             <TableRow
               key={`table-row-${i}`}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              className={styles.tableRow}
+              onClick={handleRoute}
             >
               {
                 tableColumnData && tableColumnData.map((cell) =>
                   Object.keys(row).map((key, i) =>
-                    key == cell.field &&
+                    key === cell.field &&
                     <TableCell
                       key={`cell-${i}`}
                       sx={{ width: `${cell.width}px` }}
                     >
                       {
-                        cell.field == 'image' ?
+                        cell.field === 'image' ?
                           <Avatar src={row[key]} />
                           : row[key]
                       }

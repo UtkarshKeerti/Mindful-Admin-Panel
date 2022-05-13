@@ -44,10 +44,10 @@ const DashboardLayout = (props) => {
       navitem: 'Members',
       route: '/dashboard/members'
     },
-    {
-      navitem: 'Speakers',
-      route: '/dashboard/speakers'
-    },
+    // {
+    //   navitem: 'Speakers',
+    //   route: '/dashboard/speakers'
+    // },
     {
       navitem: 'Publicaitons',
       route: '/dashboard/publications'

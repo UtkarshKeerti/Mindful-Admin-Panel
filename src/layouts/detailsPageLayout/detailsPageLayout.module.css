@@ -1,0 +1,21 @@
+.imageContainer {
+  max-width: 400px;
+}
+.imageContainer img {
+  max-width: 100%;
+}
+
+.eventDateTime {
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: lightblue;
+}
+
+.formContainer {
+  width: 100%;
+}
+
+.formContainer .formInput {
+  margin-bottom: 1rem;
+}
