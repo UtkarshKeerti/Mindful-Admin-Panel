@@ -10,6 +10,7 @@ const TableDataGrid = ({ checkbox, tableColumns, tableRows, rowsPerPageOptions, 
   const navigate = useNavigate();
 
   const handelClick = (id) => {
+    if (!baseRoute) return
     navigate(`${baseRoute}/${id}`);
   }
 

@@ -16,16 +16,16 @@ const ConvoDetails = () => {
 
   const tabs = [
     {
-      label: 'About',
-      component: 'About',
-    },
-    {
       label: 'Events',
       component: <EventsLayout />,
     },
     {
       label: 'Speakers',
       component: <EventSpeakersLayout />,
+    },
+    {
+      label: 'About',
+      component: 'About',
     },
   ]
 

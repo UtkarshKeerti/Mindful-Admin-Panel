@@ -47,12 +47,12 @@ const EventSpeakersLayout = () => {
   return (
     <>
       <Box className={'pageheading'}>
-        <Button
+        {/* <Button
           variant="contained"
           startIcon={<AddIcon />}
         >
           Add
-        </Button>
+        </Button> */}
       </Box>
       <TableDataGrid
         tableColumns={eventsColumn}

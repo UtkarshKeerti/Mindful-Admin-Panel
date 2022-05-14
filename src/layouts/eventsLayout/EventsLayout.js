@@ -3,11 +3,16 @@ import {
   Box,
   Button
 } from '@mui/material';
+import {
+  useNavigate
+} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../../components/tableCustom/TableDataGrid';
 // import TableCustom from '../../components/tableCustom/TableCustom';
 
 const EventsLayout = () => {
+
+  const navigate = useNavigate();
 
   const eventsColumn = [
     {
@@ -54,6 +59,7 @@ const EventsLayout = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={() => navigate('/dashboard/event')}
         >
           Add
         </Button>

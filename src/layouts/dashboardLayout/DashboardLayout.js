@@ -44,10 +44,10 @@ const DashboardLayout = (props) => {
       navitem: 'Members',
       route: '/dashboard/members'
     },
-    // {
-    //   navitem: 'Speakers',
-    //   route: '/dashboard/speakers'
-    // },
+    {
+      navitem: 'Speakers',
+      route: '/dashboard/speakers'
+    },
     {
       navitem: 'Publicaitons',
       route: '/dashboard/publications'
@@ -60,7 +60,6 @@ const DashboardLayout = (props) => {
 
   const drawer = (
     <>
-      {/* Replace with Logo */}
       <Toolbar sx={{ display: 'flex', justifyContent: 'center', padding: '1.5rem' }}>
         <Avatar
           alt="Site icon"
