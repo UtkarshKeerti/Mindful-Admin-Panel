@@ -12,27 +12,27 @@ const Publications = () => {
   useEffect(() => {
     setPublicationsData([
       {
-        heading: 'Design & Culture',
+        heading: 'Publication 001',
         body: 'Design & culture description',
         image: ''
       },
       {
-        heading: 'Canada Celebrates foDDDDBCFRTG ais dox',
+        heading: 'PUBLICATION 00123',
         body: 'Canada Celebrates folklore decription aso c,,a..sdio calks',
         image: ''
       },
       {
-        heading: 'Design & Culture',
-        body: 'Design & culture description',
+        heading: 'Publication',
+        body: 'Publication some rnascnuasd description',
         image: ''
       },
       {
-        heading: 'Canada Celebrates folklore asnico ais dox',
+        heading: 'folklore publication asnico ais dox',
         body: 'Canada Celebrates folklore decription aso Celebrates folklore decription aso cio calks Celebrates folklore decription aso c',
         image: ''
       },
       {
-        heading: 'Design & Culture',
+        heading: 'Publication Design & Culture',
         body: 'Design & culture description',
         image: ''
       },

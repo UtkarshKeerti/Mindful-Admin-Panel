@@ -3,44 +3,21 @@ import {
   Box,
   Button
 } from '@mui/material';
+import {
+  useNavigate
+} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../components/tableCustom/TableDataGrid';
 // import TableCustom from '../components/tableCustom/TableCustom';
 
 const Members = () => {
 
+  const navigate = useNavigate();
   // const [membersData, setMembersData] = useState([])
   const [membersColumns, setMembersColumns] = useState([]);
   const [membersRows, setMembersRows] = useState([])
 
   useEffect(() => {
-    // setMembersData([
-    //   {
-    //     name: "Roger William Connah",
-    //     title: "Director+Curator, Conversations and Publications",
-    //     image: ""
-    //   },
-    //   {
-    //     name: "Stephen Fai",
-    //     title: "Director, Research Initiatives",
-    //     image: ""
-    //   },
-    //   {
-    //     name: "Kurt Espersen-Peters",
-    //     title: "Co-Director, Academic Initiatives",
-    //     image: ""
-    //   },
-    //   {
-    //     name: "Pallavi Swaranjali",
-    //     title: "Co-Director, Academic Initiatives",
-    //     image: ""
-    //   },
-    //   {
-    //     name: "Katie Graham",
-    //     title: "Digital Initiatives Advisor",
-    //     image: ""
-    //   },
-    // ]);
 
     setMembersColumns([
       {
@@ -102,6 +79,7 @@ const Members = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={() => navigate('/dashboard/member')}
         >
           Add
         </Button>
@@ -111,6 +89,7 @@ const Members = () => {
         tableColumns={membersColumns}
         tableRows={membersRows}
         rowsPerPageOptions={15}
+        baseRoute={'/dashboard/member'}
       />
     </>
   )

@@ -3,10 +3,15 @@ import {
   Box,
   Button
 } from '@mui/material';
+import {
+  useNavigate
+} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../components/tableCustom/TableDataGrid';
 
 const Speakers = () => {
+
+  const navigate = useNavigate();
 
   const [membersColumns, setMembersColumns] = useState([]);
   const [membersRows, setMembersRows] = useState([]);
@@ -73,6 +78,7 @@ const Speakers = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={() => navigate('/dashboard/speaker')}
         >
           Add
         </Button>
@@ -81,6 +87,7 @@ const Speakers = () => {
         tableColumns={membersColumns}
         tableRows={membersRows}
         rowsPerPageOptions={15}
+        baseRoute={'/dashboard/speaker'}
       />
     </>
   )

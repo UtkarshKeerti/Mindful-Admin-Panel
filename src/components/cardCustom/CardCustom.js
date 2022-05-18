@@ -18,6 +18,7 @@ const CardCustom = ({ cardId, heading, body, image, baseRoute }) => {
   }
 
   const handleClick = (id) => {
+    if (!baseRoute) return
     navigate(`${baseRoute}/${id}`);
   }
 

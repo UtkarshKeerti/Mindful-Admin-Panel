@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   useParams
 } from 'react-router-dom';
@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import styles from './detailsPageLayout.module.css'
+import styles from './detailsPageLayout.module.css';
 
 const DetailsPageLayout = () => {
 
@@ -49,22 +49,6 @@ const DetailsPageLayout = () => {
       })
     }
   }
-
-  // const [speakers, setSpeakers] = useState([]);
-
-  // const handleSpeakerChange = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   // setSpeakers(
-  //   //   // On autofill we get a stringified value.
-  //   //   typeof value === 'string' ? value.split(',') : value,
-  //   // );
-  //   setFormData({
-  //     ...formData,
-  //     speakers: typeof value === 'string' ? value.split(',') : value,
-  //   })
-  // };
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -126,7 +110,13 @@ const DetailsPageLayout = () => {
         </Button>
       </Box>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={5} className={styles.imageContainer}>
+        <Grid
+          item
+          xs={12}
+          md={5}
+          sx={{ maxWidth: { md: 400, xs: '100%' } }}
+          className={styles.imageContainer}
+        >
           <img src="https://images.unsplash.com/photo-1614851099175-e5b30eb6f696?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8YmFubmVyfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="" />
           <p className={styles.eventDateTime}>{formData.dateTime}</p>
         </Grid>
@@ -146,7 +136,7 @@ const DetailsPageLayout = () => {
               label="Description"
               name="description"
               multiline
-              maxRows={5}
+              maxRows={8}
               value={formData.description}
               onChange={handleChange}
               className={styles.formInput}

@@ -7,6 +7,7 @@ import {
 import DashboardLayout from './layouts/dashboardLayout/DashboardLayout';
 import AuthLayout from './layouts/authLayout/AuthLayout';
 import DetailsPageLayout from './layouts/detailsPageLayout/DetailsPageLayout';
+import ProfileDetailsLayout from './layouts/detailsPageLayout/ProfileDetailsLayout';
 
 // Pages
 import Login from './pages/Login';
@@ -39,12 +40,21 @@ const Routes = () => {
       children: [
         { path: '', element: <Conversations /> },
         { path: ':id', element: <ConvoDetails /> },
+
         { path: 'members', element: <Members /> },
+        { path: 'member', element: <ProfileDetailsLayout /> },
+        { path: 'member/:id', element: <ProfileDetailsLayout /> },
+
         { path: 'speakers', element: <Speakers /> },
-        { path: 'publications', element: <Publications /> },
-        { path: 'messages', element: <UserMessages /> },
+        { path: 'speaker', element: <ProfileDetailsLayout /> },
+        { path: 'speaker/:id', element: <ProfileDetailsLayout /> },
+
         { path: 'event', element: <DetailsPageLayout />, },
         { path: 'event/:id', element: <DetailsPageLayout />, },
+
+        { path: 'publications', element: <Publications /> },
+        { path: 'messages', element: <UserMessages /> },
+
       ]
     },
     { path: '*', element: <Navigate to='/404' replace /> }

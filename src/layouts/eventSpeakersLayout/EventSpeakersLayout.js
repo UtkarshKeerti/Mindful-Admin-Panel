@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Box,
-  Button
+  // Button
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+// import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../../components/tableCustom/TableDataGrid';
 
 const EventSpeakersLayout = () => {
@@ -58,6 +58,7 @@ const EventSpeakersLayout = () => {
         tableColumns={eventsColumn}
         tableRows={eventsRow}
         rowsPerPageOptions={15}
+        baseRoute={'/dashboard/speaker'}
       />
     </>
   )

@@ -1,19 +1,16 @@
 .pageWrapper {
-  max-width: 1200px;
+  max-width: 1440px;
 }
 .pageHeading {
   margin-bottom: 1rem;
 }
 
-.pageWrapper .imageContainer {
-  max-width: 400px;
-}
 .imageContainer img {
   max-width: 100%;
 }
 
 .pageWrapper .detailsContainer {
-  max-width: 600px;
+  max-width: 800px;
   margin-left: 1rem;
 }
 
