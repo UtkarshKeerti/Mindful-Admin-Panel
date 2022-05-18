@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   NavLink,
-  Outlet
+  Outlet,
 } from 'react-router-dom';
 import {
   AppBar,
@@ -17,12 +17,16 @@ import {
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import EventIcon from '@mui/icons-material/Event';
+import GroupsIcon from '@mui/icons-material/Groups';
+import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
+import ArticleIcon from '@mui/icons-material/Article';
 import MailIcon from '@mui/icons-material/Mail';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 import MHLogo from '../../CCMH-logo.png';
 
-// import styles from './dashboardLayout.module.css';
+import styles from './dashboardLayout.module.css';
 
 const drawerWidth = 240;
 const appBarHeight = 64
@@ -38,23 +42,28 @@ const DashboardLayout = (props) => {
   const navItems = [
     {
       navitem: 'Conversations',
-      route: '/dashboard'
+      route: '/dashboard/convo',
+      icon: <EventIcon />
     },
     {
       navitem: 'Members',
-      route: '/dashboard/members'
+      route: '/dashboard/members',
+      icon: <GroupsIcon />
     },
     {
       navitem: 'Speakers',
-      route: '/dashboard/speakers'
+      route: '/dashboard/speakers',
+      icon: <InterpreterModeIcon />
     },
     {
       navitem: 'Publicaitons',
-      route: '/dashboard/publications'
+      route: '/dashboard/publications',
+      icon: <ArticleIcon />
     },
     {
       navitem: 'User Messages',
-      route: '/dashboard/messages'
+      route: '/dashboard/messages',
+      icon: <MailIcon />
     }
   ]
 
@@ -73,10 +82,14 @@ const DashboardLayout = (props) => {
       <List>
         {
           navItems.map((item, index) => (
-            <NavLink to={item.route} key={index}>
+            <NavLink
+              to={item.route}
+              key={index}
+              className={({ isActive }) => isActive ? styles.activeNav : ''}
+            >
               <ListItemButton sx={{ paddingY: '1rem' }}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {item.icon}
                 </ListItemIcon>
                 {item.navitem}
               </ListItemButton>

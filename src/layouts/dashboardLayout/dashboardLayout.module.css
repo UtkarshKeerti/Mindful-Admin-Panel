@@ -1,3 +1,9 @@
 .outletWrapper {
   background: var(--color-grey-light);
 }
+
+.activeNav div,
+.activeNav div:hover {
+  background: var(--color-primary-lightest) !important;
+  color: var(--color-primary) !important;
+}
