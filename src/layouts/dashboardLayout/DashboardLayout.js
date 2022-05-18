@@ -22,7 +22,6 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import ArticleIcon from '@mui/icons-material/Article';
 import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 import MHLogo from '../../CCMH-logo.png';
 
