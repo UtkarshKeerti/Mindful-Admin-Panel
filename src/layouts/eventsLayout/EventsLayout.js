@@ -72,7 +72,7 @@ const EventsLayout = ({ eventsRow }) => {
               tableColumns={eventsColumn}
               tableRows={eventsRow}
               rowsPerPageOptions={15}
-              // checkbox
+              checkbox
               baseRoute={'/dashboard/event'}
             />
             // <TableCustom 

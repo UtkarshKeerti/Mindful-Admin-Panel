@@ -3,7 +3,6 @@ import {
   Box,
   Button
 } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
 import AddIcon from '@mui/icons-material/Add';
 import PageLayout from '../../layouts/pageLayout/PageLayout';
 // Services
@@ -43,7 +42,7 @@ const Conversations = () => {
   //     image: ''
   //   },
   // ]
-  const [conversationsCard, setConversationsCard] = useState([])
+  const [conversationsCard, setConversationsCard] = useState()
 
   useEffect(() => {
     !sessionStorage.getItem('conversations') ?
@@ -69,16 +68,10 @@ const Conversations = () => {
           Add
         </Button>
       </Box>
-      {
-        conversationsCard.length !== 0 ?
-          <PageLayout
-            pageData={conversationsCard}
-            baseRoute={'/dashboard'}
-          /> :
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <CircularProgress size={50} />
-          </Box>
-      }
+      <PageLayout
+        pageData={conversationsCard}
+        baseRoute={'/dashboard'}
+      />
     </>
   )
 }

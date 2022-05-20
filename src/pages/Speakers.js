@@ -13,62 +13,39 @@ const Speakers = () => {
 
   const navigate = useNavigate();
 
-  const [membersColumns, setMembersColumns] = useState([]);
-  const [membersRows, setMembersRows] = useState([]);
+  const membersColumns = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      width: 100,
+      sortable: false
+    },
+    {
+      field: 'name',
+      headerName: 'Name',
+      width: 250,
+    },
+    {
+      field: 'about',
+      headerName: 'About',
+      width: 500,
+    }
+  ];
+
+  const [membersRow, setMembersRow] = useState([])
 
   useEffect(() => {
-
-    setMembersColumns([
-      {
-        field: 'id',
-        headerName: 'ID',
-        width: 100,
-        sortable: false
-      },
-      {
-        field: 'name',
-        headerName: 'Name',
-        width: 250,
-      },
-      {
-        field: 'title',
-        headerName: 'Title',
-        width: 500,
+    const speakersList = sessionStorage.getItem('speakers') && JSON.parse(sessionStorage.getItem('speakers'));
+    let tempArray = [];
+    speakersList.forEach((speaker) => {
+      const spk = {
+        id: speaker._id,
+        name: speaker.name,
+        about: speaker.about
       }
-    ]);
-
-    setMembersRows([
-      {
-        id: 1,
-        name: "Roger William Connah",
-        title: "Director+Curator, Conversations and Publications",
-        image: ""
-      },
-      {
-        id: 2,
-        name: "Stephen Fai",
-        title: "Director, Research Initiatives",
-        image: ""
-      },
-      {
-        id: 3,
-        name: "Kurt Espersen-Peters",
-        title: "Co-Director, Academic Initiatives",
-        image: ""
-      },
-      {
-        id: 4,
-        name: "Pallavi Swaranjali",
-        title: "Co-Director, Academic Initiatives",
-        image: ""
-      },
-      {
-        id: 5,
-        name: "Katie Graham",
-        title: "Digital Initiatives Advisor",
-        image: ""
-      }
-    ])
+      tempArray.push(spk)
+    });
+    setMembersRow(tempArray)
   }, [])
 
   return (
@@ -85,8 +62,9 @@ const Speakers = () => {
       </Box>
       <TableDataGrid
         tableColumns={membersColumns}
-        tableRows={membersRows}
+        tableRows={membersRow}
         rowsPerPageOptions={15}
+        checkbo
         baseRoute={'/dashboard/speaker'}
       />
     </>

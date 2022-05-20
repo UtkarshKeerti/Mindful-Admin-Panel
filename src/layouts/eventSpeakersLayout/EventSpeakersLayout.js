@@ -62,6 +62,7 @@ const EventSpeakersLayout = ({ speakersRow }) => {
               tableColumns={speakersColumn}
               tableRows={speakersRow}
               rowsPerPageOptions={15}
+              checkbox
               baseRoute={'/dashboard/speaker'}
             />
             // <TableCustom 

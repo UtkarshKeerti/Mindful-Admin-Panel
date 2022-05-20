@@ -29,7 +29,6 @@ const TableDataGrid = ({ checkbox, tableColumns, tableRows, rowsPerPageOptions, 
           border: 'none',
           '& .MuiDataGrid-row': { cursor: 'pointer' },
           '& .MuiDataGrid-row:hover': { background: '#eff2f5' },
-          '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': { padding: '0 1rem' }
         }}
       />
     </div>

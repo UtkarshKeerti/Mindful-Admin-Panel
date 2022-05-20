@@ -8,7 +8,7 @@ import PageLayout from '../layouts/pageLayout/PageLayout';
 
 const Publications = () => {
 
-  const [publicationsData, setPublicationsData] = useState([])
+  const [publicationsData, setPublicationsData] = useState()
   useEffect(() => {
     setPublicationsData([
       {
