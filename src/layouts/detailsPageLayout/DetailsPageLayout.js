@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  useParams
+  useParams,
+  useNavigate
 } from 'react-router-dom';
 import {
   Grid,
   Box,
   Button,
+  Skeleton,
+  CircularProgress,
   TextField,
   Select,
   MenuItem,
@@ -16,22 +19,62 @@ import {
   ListItemText
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+// Service
+import { getEvents, updateEvent, postEvent } from '../../services/EventService';
 
 import styles from './detailsPageLayout.module.css';
 
 const DetailsPageLayout = () => {
 
+  const navigate = useNavigate();
   const param = useParams();
   // If Param exists, then fetch details and fill the fields.
   // else Add new event page.
+
+  const conversations = sessionStorage.getItem('conversations') ? JSON.parse(sessionStorage.getItem('conversations')) : []
+  const speakersList = sessionStorage.getItem('speakers') ? JSON.parse(sessionStorage.getItem('speakers')) : []
+
+  // Function to display speaker names from Id when selected from dropdown.
+  const renderSpeaker = (selected) => {
+    // 'selected' is an array
+    let tempSpeaker = [];
+    speakersList.forEach((spk) => {
+      selected.forEach((selSpk) => {
+        if (selSpk === spk._id) tempSpeaker.push(spk.name);
+      })
+    });
+
+    // Separated by commas
+    return tempSpeaker.join(', ');
+  }
 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     conversation: "",
     speakers: [],
-    dateTime: ""
-  })
+    date: "",
+    time: ""
+  });
+
+  useEffect(() => {
+    param.id &&
+      // Get Event Details by Id
+      getEvents(param.id)
+        .then((res) => {
+          if (!res) return console.log('Undefined Response for Event Details!')
+
+          setFormData({
+            name: res.name,
+            description: res.description,
+            conversation: res.conversation,
+            speakers: res.speakers,
+            date: res.date,
+            time: res.time
+          });
+
+        })
+  }, [param.id])
 
   const handleChange = (e) => {
     if (e.target.name === "speakers") {
@@ -61,55 +104,55 @@ const DetailsPageLayout = () => {
     },
   };
 
-  const conversations = [
-    "Design and Culture",
-    "Canada Celebrates Folklore",
-    "Mindful Modernism"
-  ]
-
-  const speakersList = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-  ]
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data', formData)
+    setLoading(true);
+
+    param.id ?
+      // Update event
+      updateEvent(param.id, formData)
+        .then(res => {
+          if (!res) return console.log('Undefined response while updating event!')
+          setLoading(false);
+          alert(res.message)
+        })
+      // Posting Event
+      : postEvent(formData)
+        .then(res => {
+          if (!res) return console.log('Undefined response while posting event!');
+          setLoading(false);
+          alert(res.message)
+          navigate(-1)
+        })
   }
 
   return (
     <Box className={styles.pageWrapper}>
       <Box className={'pageheading'}>
-        <h2 className={styles.pageHeading}>
-          {
-            param.id ? `Event ${param.id}` : "Add New Event"
-          }
-        </h2>
-        <Button
-          variant="contained"
-          startIcon={<SaveIcon />}
-          disabled={
-            !(formData.name && formData.conversation && formData.dateTime)
-          }
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Save
-        </Button>
+        {
+          formData ?
+            <h2>{formData.name}</h2>
+            : <Skeleton animation="wave" variant="text" width={'40%'} height={55} />
+        }
+        {
+          loading ?
+            <CircularProgress size={30} sx={{ marginRight: 3 }} /> :
+            <Button
+              variant="contained"
+              startIcon={<SaveIcon />}
+              disabled={
+                !(formData.name && formData.conversation)
+              }
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Save
+            </Button>
+        }
       </Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ marginTop: 2 }}>
         <Grid
           item
           xs={12}
@@ -117,8 +160,8 @@ const DetailsPageLayout = () => {
           sx={{ maxWidth: { md: 400, xs: '100%' } }}
           className={styles.imageContainer}
         >
-          <img src="https://images.unsplash.com/photo-1614851099175-e5b30eb6f696?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8YmFubmVyfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="" />
-          <p className={styles.eventDateTime}>{formData.dateTime}</p>
+          <img src="https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder.png" alt="" />
+          <p className={styles.eventDateTime}>{`${formData.date} || ${formData.time}`}</p>
         </Grid>
         <Grid item xs={12} sm={7} className={styles.detailsContainer}>
           <Box component={'form'} className={styles.formContainer}>
@@ -142,7 +185,7 @@ const DetailsPageLayout = () => {
               className={styles.formInput}
             />
             <FormControl fullWidth sx={{ mb: '1rem' }} required>
-              <InputLabel id="select-convo" >Conversation</InputLabel>
+              <InputLabel id="select-convo">Conversation</InputLabel>
               <Select
                 value={formData.conversation}
                 onChange={handleChange}
@@ -153,10 +196,10 @@ const DetailsPageLayout = () => {
                 {
                   conversations.map((convo, i) =>
                     <MenuItem
-                      key={i}
-                      value={convo}
+                      key={convo._id}
+                      value={convo._id}
                     >
-                      {convo}
+                      {convo.name}
                     </MenuItem>
                   )
                 }
@@ -172,25 +215,32 @@ const DetailsPageLayout = () => {
                 name="speakers"
                 onChange={handleChange}
                 input={<OutlinedInput label="Speakers" />}
-                renderValue={(selected) => selected.join(', ')}
+                renderValue={(selected) => renderSpeaker(selected)}
                 MenuProps={MenuProps}
               >
                 {
-                  speakersList.map((name, i) => (
-                    <MenuItem key={i} value={name}>
-                      <Checkbox checked={formData.speakers.indexOf(name) > -1} />
-                      <ListItemText primary={name} />
+                  speakersList.map((spk, i) => (
+                    <MenuItem key={spk._id} value={spk._id}>
+                      <Checkbox checked={formData.speakers.indexOf(spk._id) > -1} />
+                      <ListItemText primary={spk.name} />
                     </MenuItem>
                   ))
                 }
               </Select>
             </FormControl>
             <TextField
-              required
               fullWidth
-              label="Data & Time"
-              name="dateTime"
-              value={formData.dateTime}
+              label="Date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              className={styles.formInput}
+            />
+            <TextField
+              fullWidth
+              label="Time"
+              name="time"
+              value={formData.time}
               onChange={handleChange}
               className={styles.formInput}
             />

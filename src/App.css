@@ -66,11 +66,14 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  min-height: 55px;
+  width: 100%;
 }
 .pageheading h2 {
   font-size: 1.5rem;
   margin-right: 3rem;
+  padding: 10px 0;
 }
 
 /* Custom Scrollbar */

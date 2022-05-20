@@ -20,10 +20,10 @@ const PageLayout = ({ pageData, baseRoute }) => {
             key={i}
           >
             <CardCustom
-              heading={card.heading}
-              body={card.body && card.body}
+              heading={card.name}
+              body={card.about && card.about}
               image={card.image}
-              cardId={card.id}
+              cardId={card._id}
               baseRoute={baseRoute}
             />
           </Grid>

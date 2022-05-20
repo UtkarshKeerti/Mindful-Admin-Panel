@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   NavLink,
   Outlet,
@@ -22,6 +22,8 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import ArticleIcon from '@mui/icons-material/Article';
 import MailIcon from '@mui/icons-material/Mail';
+// Service
+import { getSpeakers } from '../../services/SpeakerService';
 
 import MHLogo from '../../CCMH-logo.png';
 
@@ -101,9 +103,17 @@ const DashboardLayout = (props) => {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  useEffect(() => {
+    !sessionStorage.getItem('speakers') &&
+      getSpeakers()
+        .then((res) => {
+          if (!res) return console.log('Undefined response for getSpeakers!')
+          sessionStorage.setItem('speakers', JSON.stringify(res));
+        })
+  }, []);
+
   return (
     <Box sx={{ display: 'flex', backgroundColor: 'background.main' }}>
-
       <AppBar
         position="fixed"
         sx={{

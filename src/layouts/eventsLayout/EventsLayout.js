@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Box,
-  Button
+  Button,
+  Skeleton
 } from '@mui/material';
 import {
   useNavigate
@@ -10,7 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../../components/tableCustom/TableDataGrid';
 // import TableCustom from '../../components/tableCustom/TableCustom';
 
-const EventsLayout = () => {
+const EventsLayout = ({ eventsRow }) => {
 
   const navigate = useNavigate();
 
@@ -38,20 +39,20 @@ const EventsLayout = () => {
     }
   ];
 
-  const eventsRow = [
-    {
-      id: 1,
-      name: "Event - 001",
-      description: "Event 001 description",
-      dateTime: "12-03-2022 | 3:00pm PST"
-    },
-    {
-      id: 6,
-      name: "Event - 002",
-      description: "Event 002 description",
-      dateTime: "21-04-2022 | 4:30pm PST"
-    },
-  ]
+  // const eventsRow = [
+  //   {
+  //     id: 1,
+  //     name: "Event - 001",
+  //     description: "Event 001 description",
+  //     dateTime: "12-03-2022 | 3:00pm PST"
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Event - 002",
+  //     description: "Event 002 description",
+  //     dateTime: "21-04-2022 | 4:30pm PST"
+  //   },
+  // ]
 
   return (
     <>
@@ -64,17 +65,29 @@ const EventsLayout = () => {
           Add
         </Button>
       </Box>
-      <TableDataGrid
-        tableColumns={eventsColumn}
-        tableRows={eventsRow}
-        rowsPerPageOptions={15}
-        // checkbox
-        baseRoute={'/dashboard/event'}
-      />
-      {/* <TableCustom 
-        tableColumnData={eventsColumn}
-        tableRowData={eventsRow}
-      /> */}
+      <Box sx={{ height: 400 }}>
+        {
+          eventsRow ?
+            <TableDataGrid
+              tableColumns={eventsColumn}
+              tableRows={eventsRow}
+              rowsPerPageOptions={15}
+              // checkbox
+              baseRoute={'/dashboard/event'}
+            />
+            // <TableCustom 
+            //   tableColumnData={eventsColumn}
+            //   tableRowData={eventsRow}
+            // />
+            :
+            <Skeleton
+              animation='wave'
+              variant="rectangular"
+              height={'100%'}
+              sx={{ borderRadius: '10px' }}
+            />
+        }
+      </Box>
     </>
   )
 }

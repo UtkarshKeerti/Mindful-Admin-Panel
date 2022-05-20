@@ -1,12 +1,11 @@
 .pageWrapper {
   max-width: 1440px;
 }
-.pageHeading {
-  margin-bottom: 1rem;
-}
 
 .imageContainer img {
   max-width: 100%;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow-2);
 }
 
 .pageWrapper .detailsContainer {
@@ -18,7 +17,9 @@
   width: 100%;
   padding: 0.5rem;
   text-align: center;
-  background-color: lightblue;
+  border-radius: 10px;
+  /* background-color: lightblue; */
+  box-shadow: var(--box-shadow-2);
 }
 
 .formContainer {

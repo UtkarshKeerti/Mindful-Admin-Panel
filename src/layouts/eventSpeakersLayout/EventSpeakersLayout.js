@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   Box,
+  Skeleton
   // Button
 } from '@mui/material';
 // import AddIcon from '@mui/icons-material/Add';
 import TableDataGrid from '../../components/tableCustom/TableDataGrid';
 
-const EventSpeakersLayout = () => {
-  const eventsColumn = [
+const EventSpeakersLayout = ({ speakersRow }) => {
+  const speakersColumn = [
     {
       field: 'id',
       headerName: 'ID',
@@ -26,23 +27,23 @@ const EventSpeakersLayout = () => {
     }
   ];
 
-  const eventsRow = [
-    {
-      id: 1,
-      name: "Speaker - 001",
-      description: "Speaker 001 description",
-    },
-    {
-      id: 2,
-      name: "Speaker - 002",
-      description: "Speaker 002 description",
-    },
-    {
-      id: 3,
-      name: "Speaker - 003",
-      description: "Speaker 003 description",
-    },
-  ]
+  // const speakersRow = [
+  //   {
+  //     id: 1,
+  //     name: "Speaker - 001",
+  //     description: "Speaker 001 description",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Speaker - 002",
+  //     description: "Speaker 002 description",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Speaker - 003",
+  //     description: "Speaker 003 description",
+  //   },
+  // ]
 
   return (
     <>
@@ -54,12 +55,28 @@ const EventSpeakersLayout = () => {
           Add
         </Button> */}
       </Box>
-      <TableDataGrid
-        tableColumns={eventsColumn}
-        tableRows={eventsRow}
-        rowsPerPageOptions={15}
-        baseRoute={'/dashboard/speaker'}
-      />
+      <Box sx={{ height: 400 }}>
+        {
+          speakersRow ?
+            <TableDataGrid
+              tableColumns={speakersColumn}
+              tableRows={speakersRow}
+              rowsPerPageOptions={15}
+              baseRoute={'/dashboard/speaker'}
+            />
+            // <TableCustom 
+            //   tableColumnData={eventsColumn}
+            //   tableRowData={eventsRow}
+            // />
+            :
+            <Skeleton
+              animation='wave'
+              variant="rectangular"
+              height={'100%'}
+              sx={{ borderRadius: '10px' }}
+            />
+        }
+      </Box>
     </>
   )
 }

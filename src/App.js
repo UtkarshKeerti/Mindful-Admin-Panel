@@ -1,3 +1,5 @@
+import React from 'react'
+import axios from 'axios';
 // Routes
 import Routes from './Routes';
 // Components
@@ -23,7 +25,10 @@ function App() {
         main: "#f6f7f9"
       },
     }
-  })
+  });
+
+  // defualt config for Axios
+  axios.defaults.baseURL = process.env.REACT_APP_BASE_URL
 
   return (
     <ThemeProvider theme={theme}>
