@@ -19,7 +19,7 @@ import { getSpeakers, addSpeaker, updateSpeaker } from '../../services/SpeakerSe
 import { getMember, addMember, updateMember } from '../../services/MemberService';
 
 
-const ProfileDetailsLayout = ({ layout, profileData }) => {
+const ProfileDetailsLayout = ({ layout }) => {
 
   const navigate = useNavigate();
   const param = useParams();

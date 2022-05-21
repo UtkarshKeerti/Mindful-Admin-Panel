@@ -45,15 +45,15 @@ const Conversations = () => {
   const [conversationsCard, setConversationsCard] = useState()
 
   useEffect(() => {
-    !sessionStorage.getItem('conversations') ?
-      // Get Conversation API Call
-      getConversations()
-        .then((res) => {
-          if (!res) return console.log('Undefined response for Conversations!')
-          setConversationsCard(res)
-          sessionStorage.setItem('conversations', JSON.stringify(res));
-        })
-      : setConversationsCard(JSON.parse(sessionStorage.getItem('conversations')))
+    // !sessionStorage.getItem('conversations') ?
+    // Get Conversation API Call
+    getConversations()
+      .then((res) => {
+        if (!res) return console.log('Undefined response for Conversations!')
+        setConversationsCard(res)
+        sessionStorage.setItem('conversations', JSON.stringify(res));
+      })
+    // : setConversationsCard(JSON.parse(sessionStorage.getItem('conversations')))
 
   }, [])
 
