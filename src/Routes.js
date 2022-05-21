@@ -42,12 +42,12 @@ const Routes = () => {
         { path: ':id', element: <ConvoDetails /> },
 
         { path: 'members', element: <Members /> },
-        { path: 'member', element: <ProfileDetailsLayout /> },
-        { path: 'member/:id', element: <ProfileDetailsLayout /> },
+        { path: 'member', element: <ProfileDetailsLayout layout={'member'} /> },
+        { path: 'member/:id', element: <ProfileDetailsLayout layout={'member'} /> },
 
         { path: 'speakers', element: <Speakers /> },
-        { path: 'speaker', element: <ProfileDetailsLayout /> },
-        { path: 'speaker/:id', element: <ProfileDetailsLayout /> },
+        { path: 'speaker', element: <ProfileDetailsLayout layout={'speaker'} /> },
+        { path: 'speaker/:id', element: <ProfileDetailsLayout layout={'speaker'} /> },
 
         { path: 'event', element: <DetailsPageLayout />, },
         { path: 'event/:id', element: <DetailsPageLayout />, },

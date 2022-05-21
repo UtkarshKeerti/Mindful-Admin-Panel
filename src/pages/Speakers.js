@@ -35,7 +35,7 @@ const Speakers = () => {
   const [membersRow, setMembersRow] = useState([])
 
   useEffect(() => {
-    const speakersList = sessionStorage.getItem('speakers') && JSON.parse(sessionStorage.getItem('speakers'));
+    const speakersList = sessionStorage.getItem('speakers') ? JSON.parse(sessionStorage.getItem('speakers')) : []
     let tempArray = [];
     speakersList.forEach((speaker) => {
       const spk = {
@@ -64,7 +64,7 @@ const Speakers = () => {
         tableColumns={membersColumns}
         tableRows={membersRow}
         rowsPerPageOptions={15}
-        checkbo
+        checkbox
         baseRoute={'/dashboard/speaker'}
       />
     </>

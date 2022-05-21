@@ -108,7 +108,6 @@ const DashboardLayout = (props) => {
       getSpeakers()
         .then((res) => {
           if (!res) return console.log('Undefined response for getSpeakers!')
-          sessionStorage.setItem('speakers', JSON.stringify(res));
         })
   }, []);
 
