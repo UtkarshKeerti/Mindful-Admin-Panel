@@ -39,3 +39,16 @@ export const updateSpeaker = async (id, data) => {
 
   return response;
 }
+
+// Delete Speakers
+export const deleteSpeaker = async (arrayOfIds) => {
+  let response;
+
+  const idInUrl = arrayOfIds.join(',')
+
+  await axios.delete(`/speaker/?id=${idInUrl}`)
+    .then(res => response = res.data)
+    .catch(err => console.log('Error in deleting speaker', err))
+
+  return response;
+}
