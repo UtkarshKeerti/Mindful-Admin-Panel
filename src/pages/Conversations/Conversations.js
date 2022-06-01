@@ -71,6 +71,7 @@ const Conversations = () => {
       <PageLayout
         pageData={conversationsCard}
         baseRoute={'/dashboard'}
+        deleteDialogDesc={"This will delete the selected conversation along with all the Events under it forever. Do you still want to continue?"}
       />
     </>
   )

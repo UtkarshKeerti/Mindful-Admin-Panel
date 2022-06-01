@@ -31,7 +31,7 @@ const DialogCustom = ({ title, description, btnText, onAgreeClick, open, setOpen
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onAgreeClick}>{btnText}</Button>
+        <Button onClick={onAgreeClick} color="error">{btnText}</Button>
         <Button onClick={() => setOpen(false)}>Close</Button>
       </DialogActions>
     </Dialog>

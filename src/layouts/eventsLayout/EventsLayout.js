@@ -123,7 +123,7 @@ const EventsLayout = ({ eventsRow }) => {
       <DialogCustom
         title={"Are you sure?"}
         btnText={"Delete Anyway"}
-        description={"This will delete all the Events under this conversation. Do you still want to continue?"}
+        description={"This action will delete all the selected events forever. Do you still want to continue?"}
         onAgreeClick={handleDelete}
         setOpen={setOpen}
         open={open}

@@ -51,7 +51,10 @@ const Publications = () => {
           Add
         </Button>
       </Box>
-      <PageLayout pageData={publicationsData} />
+      <PageLayout
+        pageData={publicationsData}
+        deleteDialogDesc={"This will delete the selected publication forever. Do you still want to continue?"}
+      />
     </>
   )
 }
