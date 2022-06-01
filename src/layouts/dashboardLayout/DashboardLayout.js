@@ -104,11 +104,11 @@ const DashboardLayout = (props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   useEffect(() => {
-    !sessionStorage.getItem('speakers') &&
-      getSpeakers()
-        .then((res) => {
-          if (!res) return console.log('Undefined response for getSpeakers!')
-        })
+    // !sessionStorage.getItem('speakers') &&
+    getSpeakers()
+      .then((res) => {
+        if (!res) return console.log('Undefined response for getSpeakers!')
+      })
   }, []);
 
   return (

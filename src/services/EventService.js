@@ -34,3 +34,15 @@ export const updateEvent = async (id, eventData) => {
     .catch(err => console.log('Error in updating details!', err))
   return response;
 }
+
+// Delete Events
+export const deleteEvent = async (arrayOfIds) => {
+  const idsInUrl = arrayOfIds.join(',');
+  let response;
+
+  await axios.delete(`/event/?id=${idsInUrl}`)
+    .then(res => response = res.data)
+    .catch(err => console.log('Error in deleting Event(s)', err))
+
+  return response
+}

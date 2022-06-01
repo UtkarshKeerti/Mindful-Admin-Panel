@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -8,11 +8,16 @@ import {
   useNavigate
 } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import TableDataGrid from '../../components/tableCustom/TableDataGrid';
 // import TableCustom from '../../components/tableCustom/TableCustom';
+import DialogCustom from '../../components/dialogCustom/DialogCustom';
+// Service
+import { deleteEvent } from '../../services/EventService';
 
 const EventsLayout = ({ eventsRow }) => {
 
+  const [selectedRows, setSelectedRows] = useState([])
   const navigate = useNavigate();
 
   const eventsColumn = [
@@ -54,15 +59,42 @@ const EventsLayout = ({ eventsRow }) => {
   //   },
   // ]
 
+  const [open, setOpen] = useState(false);
+
+  const handleDeleteClick = () => {
+    if (selectedRows.length === 0) return alert('Select at least one row to proceed!')
+    setOpen(true)
+  }
+
+  const handleDelete = () => {
+    deleteEvent(selectedRows)
+      .then(res => {
+        if (!res) return console.log('Undefined value while deleting event(s)')
+        setOpen(false)
+        navigate(0)
+        alert('Event(s) Deleted!');
+      })
+  }
+
   return (
     <>
-      <Box className={'pageheading'}>
+      <Box>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => navigate('/dashboard/event')}
+          sx={{ m: '0 1rem 1rem 0' }}
         >
           Add
+        </Button>
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteOutlineRoundedIcon />}
+          onClick={handleDeleteClick}
+          sx={{ m: '0 1rem 1rem 0' }}
+        >
+          Delete
         </Button>
       </Box>
       <Box sx={{ height: 400 }}>
@@ -71,9 +103,9 @@ const EventsLayout = ({ eventsRow }) => {
             <TableDataGrid
               tableColumns={eventsColumn}
               tableRows={eventsRow}
-              rowsPerPageOptions={15}
               checkbox
               baseRoute={'/dashboard/event'}
+              setSelectedRows={setSelectedRows}
             />
             // <TableCustom 
             //   tableColumnData={eventsColumn}
@@ -88,6 +120,14 @@ const EventsLayout = ({ eventsRow }) => {
             />
         }
       </Box>
+      <DialogCustom
+        title={"Are you sure?"}
+        btnText={"Delete Anyway"}
+        description={"This will delete all the Events under this conversation. Do you still want to continue?"}
+        onAgreeClick={handleDelete}
+        setOpen={setOpen}
+        open={open}
+      />
     </>
   )
 }

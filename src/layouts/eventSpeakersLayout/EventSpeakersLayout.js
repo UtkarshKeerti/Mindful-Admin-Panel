@@ -47,14 +47,6 @@ const EventSpeakersLayout = ({ speakersRow }) => {
 
   return (
     <>
-      <Box className={'pageheading'}>
-        {/* <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-        >
-          Add
-        </Button> */}
-      </Box>
       <Box sx={{ height: 400 }}>
         {
           speakersRow ?
@@ -62,7 +54,6 @@ const EventSpeakersLayout = ({ speakersRow }) => {
               tableColumns={speakersColumn}
               tableRows={speakersRow}
               rowsPerPageOptions={15}
-              checkbox
               baseRoute={'/dashboard/speaker'}
             />
             // <TableCustom 
