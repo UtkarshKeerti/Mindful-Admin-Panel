@@ -8,7 +8,7 @@ import {
   Slide,
   Button
 } from '@mui/material';
-import styles from './dialogCustom.module.css';
+// import styles from './dialogCustom.module.css';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
