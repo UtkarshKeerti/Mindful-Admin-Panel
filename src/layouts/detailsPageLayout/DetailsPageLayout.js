@@ -112,7 +112,7 @@ const DetailsPageLayout = () => {
 
   // Function to handle update or post event api calls
   const eventApiRequest = (reqBody) => {
-    console.log('FORMM', reqBody);
+    // console.log('FORMM', reqBody);
 
     param.id ?
       // Update event

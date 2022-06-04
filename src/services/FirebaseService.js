@@ -60,7 +60,7 @@ export const deleteImageFromBucket = async (fileUrl) => {
   // Delete File
   deleteObject(imageRef)
     .then(res => {
-      console.log("File Deleted", res)
+      console.log("Image Deleted from bucket")
     })
     .catch(err => console.log('ERROR while deleteing the file', err))
 
