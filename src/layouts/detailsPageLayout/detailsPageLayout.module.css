@@ -44,3 +44,19 @@
 .formContainer .formInput {
   margin-bottom: 1rem;
 }
+
+.backdropContainer {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.progressContainer {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffffff;
+}

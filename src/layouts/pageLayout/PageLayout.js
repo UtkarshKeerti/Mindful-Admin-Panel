@@ -53,7 +53,7 @@ const PageLayout = ({ pageData, baseRoute, deleteDialogDesc }) => {
                     <CardCustom
                       heading={card.name}
                       body={card.about && card.about}
-                      image={card.image.data}
+                      image={card.image}
                       cardId={card._id}
                       baseRoute={baseRoute}
                       setOpenDialog={setOpen}

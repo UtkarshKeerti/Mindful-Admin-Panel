@@ -16,15 +16,13 @@ import {
   FormControl,
   OutlinedInput,
   Checkbox,
-  ListItemText
+  ListItemText,
+  LinearProgress
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-// Firebase
-import storage from '../../firebase';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-
 // Service
 import { getEvents, updateEvent, postEvent } from '../../services/EventService';
+import { uploadImageToBucket, deleteImageFromBucket } from '../../services/FirebaseService';
 
 import styles from './detailsPageLayout.module.css';
 
@@ -135,51 +133,22 @@ const DetailsPageLayout = () => {
   }
 
 
-  // Function to upload to firebase storage
-  const uploadToFirebase = () => {
-
-    console.log("uploading File")
-    // Format fileName
-    const ext = imageUpload.name.split('.')[1]
-    const name = imageUpload.name.split('.')[0]
-    const fileName = `${name}_${Date.now()}.${ext}`;
-
-    // Create Storage reference
-    const storageRef = ref(
-      storage,
-      `/images/${fileName}`
-    );
-
-    // Upload file in the storage ref
-    const uploadTask = uploadBytesResumable(storageRef, imageUpload);
-
-    // After/During file upload
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log("SNAPSHOT", snapshot)
-      },
-      (error) => {
-        console.log("ERROR while uploading image", error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          const obj = {
-            ...formData,
-            image: url
-          }
-          eventApiRequest(obj);
-        });
-      }
-    )
-  }
+  const [progressShow, setProgressShow] = useState(false)
+  const [progress, setProgress] = useState(0)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
 
-    if (imageUpload)
-      uploadToFirebase();
+    if (imageUpload) {
+      uploadImageToBucket(
+        imageUpload,
+        eventApiRequest,
+        setProgress,
+        setProgressShow,
+        formData
+      )
+    }
     else
       eventApiRequest(formData);
   }
@@ -226,12 +195,25 @@ const DetailsPageLayout = () => {
             />
             <img
               src={
-                formData.image ? formData.image
-                  : imageBlob ? imageBlob
+                imageBlob ? imageBlob
+                  : formData.image ? formData.image
                     : "https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder.png"
               }
               alt="uploaded-img"
             />
+            {
+              progressShow &&
+              <span className={styles.backdropContainer}>
+                <span className={styles.progressContainer}>
+                  <p>{progress}%</p>
+                  <LinearProgress
+                    variant="determinate"
+                    value={progress}
+                    sx={{ width: '80%', m: '0 auto', borderRadius: '8px' }}
+                  />
+                </span>
+              </span>
+            }
           </label>
           <p className={styles.eventDateTime}>{`${formData.date} || ${formData.time}`}</p>
         </Grid>
