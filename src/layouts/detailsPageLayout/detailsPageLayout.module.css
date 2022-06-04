@@ -2,10 +2,25 @@
   max-width: 1440px;
 }
 
-.imageContainer img {
+.imageLable {
+  position: relative;
   max-width: 100%;
   border-radius: 10px;
   box-shadow: var(--box-shadow-2);
+  height: 200px;
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.imageInput {
+  position: absolute;
+  display: none;
+}
+
+.imageContainer img {
+  width: 100%;
 }
 
 .pageWrapper .detailsContainer {

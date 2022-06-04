@@ -19,6 +19,10 @@ import {
   ListItemText
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+// Firebase
+import storage from '../../firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
 // Service
 import { getEvents, updateEvent, postEvent } from '../../services/EventService';
 
@@ -30,6 +34,17 @@ const DetailsPageLayout = () => {
   const param = useParams();
   // If Param exists, then fetch details and fill the fields.
   // else Add new event page.
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
 
   const conversations = sessionStorage.getItem('conversations') ? JSON.parse(sessionStorage.getItem('conversations')) : []
   const speakersList = sessionStorage.getItem('speakers') ? JSON.parse(sessionStorage.getItem('speakers')) : []
@@ -48,9 +63,14 @@ const DetailsPageLayout = () => {
     return tempSpeaker.join(', ');
   }
 
+  const [imageUpload, setImageUpload] = useState(); // file for firebase image upload
+  const [imageBlob, setImageBlob] = useState(); // blobUrl for image preview
+  const [loading, setLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    image: "",
     conversation: "",
     speakers: [],
     date: "",
@@ -63,16 +83,7 @@ const DetailsPageLayout = () => {
       getEvents(param.id)
         .then((res) => {
           if (!res) return console.log('Undefined Response for Event Details!')
-
-          setFormData({
-            name: res.name,
-            description: res.description,
-            conversation: res.conversation,
-            speakers: res.speakers,
-            date: res.date,
-            time: res.time
-          });
-
+          setFormData(res);
         })
   }, [param.id])
 
@@ -93,33 +104,28 @@ const DetailsPageLayout = () => {
     }
   }
 
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
+  const handleImgUpload = (e) => {
+    const file = e.target.files[0]
+    const blobUrl = URL.createObjectURL(file)
+    setImageBlob(blobUrl) // preview
+    setImageUpload(file) // for firebase file
+  }
 
-  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
+  // Function to handle update or post event api calls
+  const eventApiRequest = (reqBody) => {
+    console.log('FORMM', reqBody);
 
     param.id ?
       // Update event
-      updateEvent(param.id, formData)
+      updateEvent(param.id, reqBody)
         .then(res => {
           if (!res) return console.log('Undefined response while updating event!')
           setLoading(false);
           alert(res.message)
         })
       // Posting Event
-      : postEvent(formData)
+      : postEvent(reqBody)
         .then(res => {
           if (!res) return console.log('Undefined response while posting event!');
           setLoading(false);
@@ -127,6 +133,57 @@ const DetailsPageLayout = () => {
           navigate(-1)
         })
   }
+
+
+  // Function to upload to firebase storage
+  const uploadToFirebase = () => {
+
+    console.log("uploading File")
+    // Format fileName
+    const ext = imageUpload.name.split('.')[1]
+    const name = imageUpload.name.split('.')[0]
+    const fileName = `${name}_${Date.now()}.${ext}`;
+
+    // Create Storage reference
+    const storageRef = ref(
+      storage,
+      `/images/${fileName}`
+    );
+
+    // Upload file in the storage ref
+    const uploadTask = uploadBytesResumable(storageRef, imageUpload);
+
+    // After/During file upload
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("SNAPSHOT", snapshot)
+      },
+      (error) => {
+        console.log("ERROR while uploading image", error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          const obj = {
+            ...formData,
+            image: url
+          }
+          eventApiRequest(obj);
+        });
+      }
+    )
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (imageUpload)
+      uploadToFirebase();
+    else
+      eventApiRequest(formData);
+  }
+
 
   return (
     <Box className={styles.pageWrapper}>
@@ -160,7 +217,22 @@ const DetailsPageLayout = () => {
           sx={{ maxWidth: { md: 400, xs: '100%' } }}
           className={styles.imageContainer}
         >
-          <img src="https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder.png" alt="" />
+          <label htmlFor="upload-img" className={styles.imageLable}>
+            <input
+              id="upload-img"
+              type="file"
+              className={styles.imageInput}
+              onChange={handleImgUpload}
+            />
+            <img
+              src={
+                formData.image ? formData.image
+                  : imageBlob ? imageBlob
+                    : "https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder.png"
+              }
+              alt="uploaded-img"
+            />
+          </label>
           <p className={styles.eventDateTime}>{`${formData.date} || ${formData.time}`}</p>
         </Grid>
         <Grid item xs={12} sm={7} className={styles.detailsContainer}>
