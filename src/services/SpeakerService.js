@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { deleteImageFromBucket } from './FirebaseService';
 
 // Add speaker
 export const addSpeaker = async (data) => {
@@ -42,13 +42,33 @@ export const updateSpeaker = async (id, data) => {
 
 // Delete Speakers
 export const deleteSpeaker = async (arrayOfIds) => {
+  const idsInUrl = arrayOfIds.join(',');
   let response;
 
-  const idInUrl = arrayOfIds.join(',')
+  // get image urls for every speaker
+  getSpeakerImage(arrayOfIds)
+    .then(res => {
+      res.forEach((url) => {
+        url.image &&
+          deleteImageFromBucket(url.image)
+      })
+    })
 
-  await axios.delete(`/speaker/?id=${idInUrl}`)
+  await axios.delete(`/speaker/?id=${idsInUrl}`)
     .then(res => response = res.data)
     .catch(err => console.log('Error in deleting speaker', err))
+
+  return response;
+}
+
+// Get speaker image
+export const getSpeakerImage = async (arrayOfIds) => {
+  const idsInUrl = arrayOfIds.join(',');
+  let response;
+
+  await axios.get(`/speaker-image/?id=${idsInUrl}`)
+    .then(res => response = res.data)
+    .catch(err => console.log('Error in getting speaker images', err))
 
   return response;
 }

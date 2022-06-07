@@ -10,13 +10,16 @@ import {
   CircularProgress,
   Button,
   TextField,
-  Avatar
+  Avatar,
+  LinearProgress
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import styles from './detailsPageLayout.module.css';
 // Service
 import { getSpeakers, addSpeaker, updateSpeaker } from '../../services/SpeakerService';
 import { getMember, addMember, updateMember } from '../../services/MemberService';
+import { uploadImageToBucket } from '../../services/FirebaseService';
+// style
+import styles from './detailsPageLayout.module.css';
 
 
 const ProfileDetailsLayout = ({ layout }) => {
@@ -24,73 +27,17 @@ const ProfileDetailsLayout = ({ layout }) => {
   const navigate = useNavigate();
   const param = useParams();
 
+  const [imageUpload, setImageUpload] = useState(); // file for firebase image upload
+  const [imageBlob, setImageBlob] = useState();   // BlobUrl for image preview.
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState();
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    if (!param.id) {
-      layout === 'member' ?
-        // Add member
-        addMember(formData)
-          .then((res) => {
-            if (!res) return console.log('Could not add member!');
-            alert(res.message);
-            setLoading(false);
-            navigate(-1);
-          }) :
-        // Add speaker
-        addSpeaker(formData)
-          .then((res) => {
-            if (!res) return console.log('Could not add Speaker!');
-
-            // Call Get speakers api to update sessionStorage
-            getSpeakers()
-
-            alert(res.message);
-            setLoading(false);
-            navigate(-1)
-          })
-    } else {
-      layout === 'member' ?
-        // update member
-        updateMember(param.id, formData)
-          .then((res) => {
-            if (!res) return console.log('Could not update member');
-            alert(res.message)
-            setLoading(false);
-          }) :
-        // Update Speaker
-        updateSpeaker(param.id, formData)
-          .then((res) => {
-            if (!res) return console.log('Could not update speaker');
-
-            // Call Get speakers api to update sessionStorage
-            getSpeakers()
-
-            alert(res.message)
-            setLoading(false);
-          })
-    }
-  }
+  const [formData, setFormData] = useState({
+    name: "",
+    title: "",
+    about: "",
+    image: ""
+  });
 
   useEffect(() => {
-
-    setFormData({
-      name: "",
-      title: "",
-      about: "",
-      image: ""
-    })
 
     if (param.id) {
       layout === 'speaker' ?
@@ -118,6 +65,81 @@ const ProfileDetailsLayout = ({ layout }) => {
     }
 
   }, [param.id, layout])
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const blobUrl = URL.createObjectURL(file);
+    setImageBlob(blobUrl) // image preview
+    setImageUpload(file) // firbase image upload
+  }
+
+  // To handle post/update API calls
+  const profileApiRequest = (reqBody) => {
+    // console.log("REQBODY: ", reqBody)
+
+    if (!param.id) {
+      layout === 'member' ?
+        // Add member
+        addMember(reqBody)
+          .then((res) => {
+            if (!res) return console.log('Could not add member!');
+            alert(res.message);
+            setLoading(false);
+            navigate(-1);
+          }) :
+        // Add speaker
+        addSpeaker(reqBody)
+          .then((res) => {
+            if (!res) return console.log('Could not add Speaker!');
+            alert(res.message);
+            setLoading(false);
+            navigate(-1)
+          })
+    } else {
+      layout === 'member' ?
+        // update member
+        updateMember(param.id, reqBody)
+          .then((res) => {
+            if (!res) return console.log('Could not update member');
+            alert(res.message)
+            setLoading(false);
+          }) :
+        // Update Speaker
+        updateSpeaker(param.id, reqBody)
+          .then((res) => {
+            if (!res) return console.log('Could not update speaker');
+            alert(res.message)
+            setLoading(false);
+          })
+    }
+  }
+
+  const [progressShow, setpProgressShow] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true)
+
+    if (imageUpload) {
+      uploadImageToBucket(
+        imageUpload,
+        'profiles',
+        profileApiRequest,
+        setProgress,
+        setpProgressShow,
+        formData
+      )
+    } else
+      profileApiRequest(formData);
+  }
 
   return (
     <Box className={styles.pageWrapper}>
@@ -149,10 +171,35 @@ const ProfileDetailsLayout = ({ layout }) => {
           sx={{ maxWidth: { md: '250px', xs: '100%' } }}
           className={styles.profileImageContainer}
         >
-          <Avatar
-            src={formData && formData.image}
-            sx={{ width: 200, height: 200, margin: { md: '0', xs: "auto" } }}
-          />
+          <label htmlFor="upload-profile-img" className={styles.imageLable}>
+            <input
+              id="upload-profile-img"
+              type="file"
+              className={styles.imageInput}
+              onChange={handleImageUpload}
+            />
+            <Avatar
+              src={
+                imageBlob ? imageBlob
+                  : formData.image ? formData.image
+                    : ""
+              }
+              sx={{ width: 200, height: 200, margin: { md: '0', xs: "auto" } }}
+            />
+            {
+              progressShow &&
+              <span className={styles.backdropContainer}>
+                <span className={styles.progressContainer}>
+                  <p>{progress}%</p>
+                  <LinearProgress
+                    variant="determinate"
+                    value={progress}
+                    sx={{ width: '80%', m: '0 auto', borderRadius: '8px' }}
+                  />
+                </span>
+              </span>
+            }
+          </label>
         </Grid>
 
         {

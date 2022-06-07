@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { deleteImageFromBucket } from './FirebaseService';
 
 // Add member
 export const addMember = async (data) => {
@@ -34,5 +35,35 @@ export const updateMember = async (id, data) => {
   return response;
 }
 
-
 // Delete Member
+export const deleteMember = async (arrayOfIds) => {
+  const idsInUrl = arrayOfIds.join(',')
+  let response;
+
+  // get member image url
+  getMemberImage(arrayOfIds)
+    .then(res => {
+      res.forEach((url) => {
+        url.image &&
+          deleteImageFromBucket(url.image)
+      })
+    })
+
+  await axios.delete(`/member/?id=${idsInUrl}`)
+    .then(res => response = res.data)
+    .catch(err => console.log('Error in deleteing member', err))
+
+  return response;
+}
+
+// Get Member image
+export const getMemberImage = async (arrayOfIds) => {
+  const idsInUrl = arrayOfIds.join(',')
+  let response;
+
+  await axios.get(`/member-image/?id=${idsInUrl}`)
+    .then(res => response = res.data)
+    .catch(err => console.log('Error in getting member images', err))
+
+  return response;
+}

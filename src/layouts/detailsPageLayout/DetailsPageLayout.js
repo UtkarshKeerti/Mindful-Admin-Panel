@@ -22,7 +22,7 @@ import {
 import SaveIcon from '@mui/icons-material/Save';
 // Service
 import { getEvents, updateEvent, postEvent } from '../../services/EventService';
-import { uploadImageToBucket, deleteImageFromBucket } from '../../services/FirebaseService';
+import { uploadImageToBucket } from '../../services/FirebaseService';
 
 import styles from './detailsPageLayout.module.css';
 
@@ -143,6 +143,7 @@ const DetailsPageLayout = () => {
     if (imageUpload) {
       uploadImageToBucket(
         imageUpload,
+        'events',
         eventApiRequest,
         setProgress,
         setProgressShow,

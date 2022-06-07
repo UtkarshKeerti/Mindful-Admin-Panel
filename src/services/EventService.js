@@ -45,7 +45,8 @@ export const deleteEvent = async (arrayOfIds) => {
   getEventImage(arrayOfIds)
     .then(res => {
       res.forEach((url) => {
-        deleteImageFromBucket(url.image)
+        url.image &&
+          deleteImageFromBucket(url.image)
       })
     })
 

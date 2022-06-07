@@ -5,11 +5,12 @@ import {
 } from '@mui/material';
 import {
   useNavigate
-} from 'react-router-dom'
-import AddIcon from '@mui/icons-material/Add';
-import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+} from 'react-router-dom';
 import TableDataGrid from '../components/tableCustom/TableDataGrid';
 import DialogCustom from '../components/dialogCustom/DialogCustom';
+// Icon
+import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 // Service
 import { getSpeakers, deleteSpeaker } from '../services/SpeakerService';
 
@@ -38,11 +39,11 @@ const Speakers = () => {
 
   const [membersRow, setMembersRow] = useState([])
 
-  useEffect(() => {
-    // const speakersList = sessionStorage.getItem('speakers') ? JSON.parse(sessionStorage.getItem('speakers')) : []
+  const getSpeakerApiCall = () => {
     getSpeakers()
       .then(res => {
         if (!res) return console.log("undefined response while getting speakers")
+
         let tempArray = [];
         res.forEach((speaker) => {
           const spk = {
@@ -54,7 +55,10 @@ const Speakers = () => {
         });
         setMembersRow(tempArray)
       })
+  }
 
+  useEffect(() => {
+    getSpeakerApiCall()
   }, [])
 
   const [open, setOpen] = useState(false);
@@ -70,8 +74,8 @@ const Speakers = () => {
       .then(res => {
         if (!res) return console.log("Undefined response while deleting speaker!")
         setOpen(false)
-        navigate(0)
-        alert('Deleted Speakers successfully!')
+        getSpeakerApiCall()
+        alert('Speaker(s) Deleted!')
       })
   }
 

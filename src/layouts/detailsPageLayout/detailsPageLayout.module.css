@@ -6,9 +6,9 @@
   position: relative;
   max-width: 100%;
   border-radius: 10px;
-  box-shadow: var(--box-shadow-2);
   height: 200px;
   display: flex;
+  justify-content: center;
   overflow: hidden;
   margin-bottom: 1rem;
   cursor: pointer;
@@ -21,6 +21,7 @@
 
 .imageContainer img {
   width: 100%;
+  box-shadow: var(--box-shadow-2);
 }
 
 .pageWrapper .detailsContainer {

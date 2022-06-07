@@ -2,9 +2,11 @@ import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebas
 import storage from '../firebase';
 
 // To upload image in Bucket
-export const uploadImageToBucket = (imageFile, apiCallFunc, setProgress, setProgressShow, formData) => {
-  console.log("uploading File")
-  setProgressShow(true);
+// All arguments are required for image upload to work.
+export const uploadImageToBucket = (imageFile, subFolder, apiCallFunc, setProgress, setProgressShow, formData) => {
+  // console.log("uploading File")
+  setProgressShow(true)
+
   // Format fileName
   const ext = imageFile.name.split('.')[1]
   const name = imageFile.name.split('.')[0]
@@ -13,7 +15,7 @@ export const uploadImageToBucket = (imageFile, apiCallFunc, setProgress, setProg
   // Create Storage reference
   const storageRef = ref(
     storage,
-    `/images/${fileName}`
+    `/images/${subFolder}/${fileName}`
   );
 
   // Upload file in the storage ref
@@ -49,7 +51,7 @@ export const uploadImageToBucket = (imageFile, apiCallFunc, setProgress, setProg
 
 // To delete image from bucket
 export const deleteImageFromBucket = async (fileUrl) => {
-  console.log('Deleting Image from bucket');
+  // console.log('Deleting Image from bucket');
 
   // Create a reference to the file to delete
   const imageRef = ref(
@@ -60,7 +62,7 @@ export const deleteImageFromBucket = async (fileUrl) => {
   // Delete File
   deleteObject(imageRef)
     .then(res => {
-      console.log("Image Deleted from bucket")
+      // console.log("Image Deleted from bucket")
     })
     .catch(err => console.log('ERROR while deleteing the file', err))
 
