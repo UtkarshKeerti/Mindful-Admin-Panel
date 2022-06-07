@@ -10,6 +10,10 @@ import './App.css';
 
 function App() {
 
+  // defualt config for Axios
+  axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
   const theme = createTheme({
     typography: {
       "fontFamily": `"Poppins", sans-serif`,
@@ -26,9 +30,6 @@ function App() {
       },
     }
   });
-
-  // defualt config for Axios
-  axios.defaults.baseURL = process.env.REACT_APP_BASE_URL
 
   return (
     <ThemeProvider theme={theme}>
