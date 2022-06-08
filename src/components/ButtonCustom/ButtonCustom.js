@@ -2,9 +2,12 @@ import React from 'react';
 import {
   useNavigate
 } from 'react-router-dom'
+import {
+  CircularProgress
+} from '@mui/material'
 import styles from './buttonCustom.module.css';
 
-const ButtonCustom = ({ primary, secondary, onClick, btnText, btnType, customStyles, route }) => {
+const ButtonCustom = ({ primary, secondary, onClick, btnText, btnType, customStyles, route, loading }) => {
 
   const navigate = useNavigate();
 
@@ -15,7 +18,14 @@ const ButtonCustom = ({ primary, secondary, onClick, btnText, btnType, customSty
       style={customStyles}
       type={btnType}
     >
-      {btnText}
+      {
+        loading ?
+          <CircularProgress
+            color="background"
+            size={25}
+          />
+          : btnText
+      }
     </button>
   )
 }

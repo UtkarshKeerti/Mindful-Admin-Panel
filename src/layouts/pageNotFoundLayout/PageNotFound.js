@@ -18,7 +18,7 @@ const PageNotFound = () => {
         btnText={"Go Home"}
         primary
         customStyles={{ margin: '3rem auto' }}
-        route={'/dashboard'}
+        route={'/'}
       />
     </div>
   )

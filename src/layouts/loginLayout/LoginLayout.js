@@ -9,6 +9,8 @@ import {
   useNavigate
 } from 'react-router-dom';
 import ButtonCustom from '../../components/ButtonCustom/ButtonCustom';
+// Service
+import { adminLogin } from '../../services/Auth';
 
 import logo from '../../CCMH-logo.png'
 import styles from './loginLayout.module.css'
@@ -17,9 +19,10 @@ const LoginLayout = () => {
 
   const navigate = useNavigate();
 
+  const [loader, setLoader] = useState(false);
   const [loginData, setLoginData] = useState({
-    email: 'admin@mindfulhabitats.com',
-    password: ''
+    email: '',
+    password: '',
   });
   const [loginError, setLoginError] = useState('');
 
@@ -32,12 +35,19 @@ const LoginLayout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoader(true)
 
     if (loginData.email && loginData.password) {
-      navigate('/dashboard')
-      console.log('LOGIN: ', loginData)
+      adminLogin(loginData)
+        .then(res => {
+          if (!res) return console.log('Undefined response - Admin login')
+          sessionStorage.setItem('adminUser', JSON.stringify(res))
+          navigate('/dashboard')
+          setLoader(false)
+        })
     } else {
-      setLoginError('This is required!')
+      setLoginError('All fields are required!')
+      setLoader(false)
     }
   }
 
@@ -78,10 +88,11 @@ const LoginLayout = () => {
               name={'email'}
               className={styles.textField}
               value={loginData.email}
+              error={loginError && !loginData.email ? true : false}
               onChange={handleChange}
-              InputProps={{
-                readOnly: true,
-              }}
+            // InputProps={{
+            //   readOnly: true,
+            // }}
             />
             <TextField
               required
@@ -92,15 +103,16 @@ const LoginLayout = () => {
               type='password'
               value={loginData.password}
               onChange={handleChange}
-              error={loginError ? true : false}
-              helperText={loginError}
+              error={loginError && !loginData.password ? true : false}
+              helperText={loginError && !loginData.password ? loginError : ""}
             />
             <ButtonCustom
               primary
               type="submit"
               btnText={'Login'}
               onClick={handleSubmit}
-              customStyles={{ margin: '1.5rem auto' }}
+              customStyles={{ margin: '1.5rem auto', width: '110px' }}
+              loading={loader}
             />
           </Box>
         </Box>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   NavLink,
   Outlet,
+  useNavigate
 } from 'react-router-dom';
 import {
   AppBar,
@@ -15,13 +16,14 @@ import {
   IconButton,
   Avatar
 } from '@mui/material';
-
+// Icons
 import MenuIcon from '@mui/icons-material/Menu';
 import EventIcon from '@mui/icons-material/Event';
 import GroupsIcon from '@mui/icons-material/Groups';
 import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import ArticleIcon from '@mui/icons-material/Article';
 import MailIcon from '@mui/icons-material/Mail';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 // Service
 import { getSpeakers } from '../../services/SpeakerService';
 
@@ -35,15 +37,23 @@ const appBarHeight = 64
 const DashboardLayout = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const [adminSession, setAdminSession] = useState(JSON.parse(sessionStorage.getItem('adminUser')))
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    sessionStorage.clear();
+    navigate('/')
+  }
+
   const navItems = [
     {
       navitem: 'Conversations',
-      route: '/dashboard/convo',
+      route: '/dashboard',
       icon: <EventIcon />
     },
     {
@@ -97,6 +107,13 @@ const DashboardLayout = (props) => {
             </NavLink>
           ))
         }
+        <Divider />
+        <ListItemButton sx={{ paddingY: '1rem', marginY: '1rem' }} onClick={handleLogout}>
+          <ListItemIcon>
+            <LogoutRoundedIcon />
+          </ListItemIcon>
+          Logout
+        </ListItemButton>
       </List>
     </>
   );
@@ -104,7 +121,9 @@ const DashboardLayout = (props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   useEffect(() => {
-    // !sessionStorage.getItem('speakers') &&
+
+    if (!(adminSession && adminSession.token)) return navigate('/')
+
     getSpeakers()
       .then((res) => {
         if (!res) return console.log('Undefined response for getSpeakers!')
@@ -112,73 +131,79 @@ const DashboardLayout = (props) => {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', backgroundColor: 'background.main' }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { lg: `calc(100% - ${drawerWidth}px)` },
-          ml: { lg: `${drawerWidth}px` },
-          maxHeight: `${appBarHeight}px`,
-        }}
-        color="primary"
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { lg: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { lg: drawerWidth }, flexShrink: { lg: 0 } }}
-        aria-label="mailbox folders"
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', lg: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', lg: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
+    <>
+      {
+        adminSession && adminSession.token &&
 
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: '2000px',
-          minHeight: `calc(100vh - ${appBarHeight}px)`,
-          // ml: { lg: `${drawerWidth}px` },
-          mt: `${appBarHeight}px`,
-          p: { xs: '2rem 1.5rem', lg: '2rem' },
-        }}
-      >
-        <Outlet />
-      </Box>
-    </Box>
+        <Box sx={{ display: 'flex', backgroundColor: 'background.main' }}>
+          <AppBar
+            position="fixed"
+            sx={{
+              width: { lg: `calc(100% - ${drawerWidth}px)` },
+              ml: { lg: `${drawerWidth}px` },
+              maxHeight: `${appBarHeight}px`,
+            }}
+            color="primary"
+          >
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { lg: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <Box
+            component="nav"
+            sx={{ width: { lg: drawerWidth }, flexShrink: { lg: 0 } }}
+            aria-label="mailbox folders"
+          >
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: 'block', lg: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+            >
+              {drawer}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', lg: 'block' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Box>
+
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: '2000px',
+              minHeight: `calc(100vh - ${appBarHeight}px)`,
+              // ml: { lg: `${drawerWidth}px` },
+              mt: `${appBarHeight}px`,
+              p: { xs: '2rem 1.5rem', lg: '2rem' },
+            }}
+          >
+            <Outlet />
+          </Box>
+        </Box>
+      }
+    </>
   )
 }
 

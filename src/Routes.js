@@ -38,7 +38,7 @@ const Routes = () => {
       path: 'dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'convo', element: <Conversations /> },
+        { path: '/dashboard', element: <Conversations /> },
         { path: ':id', element: <ConvoDetails /> },
 
         { path: 'members', element: <Members /> },
