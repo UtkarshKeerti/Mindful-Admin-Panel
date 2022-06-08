@@ -47,7 +47,7 @@ const LoginLayout = () => {
           signInFirebase(loginData)
 
           sessionStorage.setItem('adminUser', JSON.stringify(res))
-          navigate('/dashboard')
+          navigate('/dashboard/convo')
           setLoader(false)
         })
     } else {

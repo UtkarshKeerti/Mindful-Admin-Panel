@@ -51,11 +51,20 @@ const DashboardLayout = (props) => {
     sessionStorage.clear();
     navigate('/')
   }
+  useEffect(() => {
+
+    if (!(adminSession && adminSession.token)) return navigate('/')
+
+    getSpeakers()
+      .then((res) => {
+        if (!res) return console.log('Undefined response for getSpeakers!')
+      })
+  }, []);
 
   const navItems = [
     {
       navitem: 'Conversations',
-      route: '/dashboard',
+      route: '/dashboard/convo',
       icon: <EventIcon />
     },
     {
@@ -122,15 +131,6 @@ const DashboardLayout = (props) => {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  useEffect(() => {
-
-    if (!(adminSession && adminSession.token)) return navigate('/')
-
-    getSpeakers()
-      .then((res) => {
-        if (!res) return console.log('Undefined response for getSpeakers!')
-      })
-  }, []);
 
   return (
     <>
