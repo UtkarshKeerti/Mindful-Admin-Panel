@@ -11,6 +11,7 @@ import {
 import ButtonCustom from '../../components/ButtonCustom/ButtonCustom';
 // Service
 import { adminLogin } from '../../services/Auth';
+import { signInFirebase } from '../../services/FirebaseService';
 
 import logo from '../../CCMH-logo.png'
 import styles from './loginLayout.module.css'
@@ -41,6 +42,10 @@ const LoginLayout = () => {
       adminLogin(loginData)
         .then(res => {
           if (!res) return console.log('Undefined response - Admin login')
+
+          // Sign in to firebase app
+          signInFirebase(loginData)
+
           sessionStorage.setItem('adminUser', JSON.stringify(res))
           navigate('/dashboard')
           setLoader(false)

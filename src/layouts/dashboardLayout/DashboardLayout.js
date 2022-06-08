@@ -25,6 +25,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import MailIcon from '@mui/icons-material/Mail';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 // Service
+import { signOutFirebase } from '../../services/FirebaseService';
 import { getSpeakers } from '../../services/SpeakerService';
 
 import MHLogo from '../../CCMH-logo.png';
@@ -46,6 +47,7 @@ const DashboardLayout = (props) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
+    signOutFirebase();
     sessionStorage.clear();
     navigate('/')
   }

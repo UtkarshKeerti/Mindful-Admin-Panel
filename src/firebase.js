@@ -11,7 +11,10 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 }
 
-const app = initializeApp(firebaseConfig)
-const storage = getStorage(app, process.env.REACT_APP_BUCKET_URL)
 
-export default storage;
+const firebaseApp = initializeApp(firebaseConfig)
+export const storage = getStorage(firebaseApp, process.env.REACT_APP_BUCKET_URL)
+
+// const auth = getAuth()
+// export const signInFirebase = signInWithEmailAndPassword(auth, 'admin@mindful.com', 'pass@123');
+export default firebaseApp;

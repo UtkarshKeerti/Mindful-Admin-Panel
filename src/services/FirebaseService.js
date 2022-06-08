@@ -1,5 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import storage from '../firebase';
+import firebaseApp, { storage } from '../firebase';
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 // To upload image in Bucket
 // All arguments are required for image upload to work.
@@ -66,4 +67,32 @@ export const deleteImageFromBucket = async (fileUrl) => {
     })
     .catch(err => console.log('ERROR while deleteing the file', err))
 
+}
+
+// SignIn to firebase app
+export const signInFirebase = async (data) => {
+  let response;
+
+  const auth = getAuth(firebaseApp);
+  signInWithEmailAndPassword(auth, data.email, data.password)
+    .then(res => {
+      if (!res) return console.log('undefined response firebase signin')
+      response = {
+        accessToken: res.user.accessToken,
+        uid: res.user.uid,
+        email: res.user.email
+      }
+      // console.log('Firebase:', user)
+    })
+
+  return response;
+}
+
+// Sign out of firebase app
+export const signOutFirebase = async () => {
+  const auth = getAuth(firebaseApp);
+
+  signOut(auth).then(res =>
+    console.log("LOGGED OUT of FirebaseApp")
+  )
 }
