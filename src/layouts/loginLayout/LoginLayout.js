@@ -6,7 +6,7 @@ import {
   TextField
 } from '@mui/material';
 import {
-  useNavigate
+  useNavigate,
 } from 'react-router-dom';
 import ButtonCustom from '../../components/ButtonCustom/ButtonCustom';
 // Service
@@ -19,6 +19,12 @@ import styles from './loginLayout.module.css'
 const LoginLayout = () => {
 
   const navigate = useNavigate();
+
+  const [adminSession, setAdminSession] = useState(JSON.parse(sessionStorage.getItem('adminUser')))
+
+  useEffect(() => {
+    if ((adminSession && adminSession.token)) return navigate('/dashboard/convo')
+  }, [])
 
   const [loader, setLoader] = useState(false);
   const [loginData, setLoginData] = useState({
