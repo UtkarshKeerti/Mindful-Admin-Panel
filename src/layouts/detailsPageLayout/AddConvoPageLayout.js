@@ -10,17 +10,17 @@ import {
   Skeleton,
   CircularProgress,
   TextField,
-  LinearProgress
 } from '@mui/material';
 import ImageComponent from '../../components/imageComponent/ImageComponent';
 import SaveIcon from '@mui/icons-material/Save';
 // Service
 import { addConversation, updateConversation } from '../../services/ConversationService';
+import { addPublication, getPublication, updatePublication } from '../../services/PublicationService';
 import { uploadImageToBucket } from '../../services/FirebaseService';
 
 import styles from './detailsPageLayout.module.css';
 
-const AddConvoPageLayout = ({ convoData }) => {
+const AddConvoPageLayout = ({ convoData, layout }) => {
 
   const navigate = useNavigate();
   const param = useParams();
@@ -36,12 +36,20 @@ const AddConvoPageLayout = ({ convoData }) => {
   });
 
   useEffect(() => {
-    param.id && convoData &&
-      setFormData({
-        name: convoData.name,
-        image: convoData.image,
-        description: convoData.description
-      })
+    if (param.id) {
+      convoData ?
+        setFormData({
+          name: convoData.name,
+          image: convoData.image,
+          description: convoData.description
+        })
+        : layout === 'publication' &&
+        getPublication(param.id)
+          .then(res => {
+            if (!res) return console.log("Undefined response while getting publication")
+            setFormData(res)
+          })
+    }
   }, [])
 
   const handleChange = (e) => {
@@ -51,9 +59,8 @@ const AddConvoPageLayout = ({ convoData }) => {
     })
   }
 
-  // API calls function
-  const addConvoApiCall = (reqBody) => {
-
+  // API call function for conversation
+  const convoApiCall = (reqBody) => {
     param.id ?
       // update conversation
       updateConversation(param.id, reqBody)
@@ -73,6 +80,27 @@ const AddConvoPageLayout = ({ convoData }) => {
         })
   }
 
+  // API call function for Publication
+  const publicationApiCall = (reqBody) => {
+    param.id ?
+      // update publication
+      updatePublication(param.id, reqBody)
+        .then(res => {
+          if (!res) return console.log('Undefined response while updating publication!');
+          setLoading(false);
+          navigate(-1)
+          alert(res.message)
+        })
+      // Add publication
+      : addPublication(reqBody)
+        .then(res => {
+          if (!res) return console.log('Undefined response while adding publication');
+          setLoading(false)
+          navigate(-1)
+          alert(res.message);
+        })
+  }
+
   const [progressShow, setProgressShow] = useState(false)
   const [progress, setProgress] = useState(0)
 
@@ -83,15 +111,18 @@ const AddConvoPageLayout = ({ convoData }) => {
     if (imageUpload) {
       uploadImageToBucket(
         imageUpload,
-        'conversations',
-        addConvoApiCall,
+        layout === 'publication' ? 'publications' : 'conversations',
+        layout === 'publication' ? publicationApiCall : convoApiCall,
         setProgress,
         setProgressShow,
         formData,
         setLoading
       )
-    } else
-      addConvoApiCall(formData)
+    } else {
+      layout === 'publication' ?
+        publicationApiCall(formData)
+        : convoApiCall(formData)
+    }
   }
 
 
@@ -128,7 +159,7 @@ const AddConvoPageLayout = ({ convoData }) => {
           className={styles.imageContainer}
         >
           <ImageComponent
-            inputId={'upload-convo-img'}
+            inputId={'upload-img'}
             formImage={formData.image}
             setImageUpload={setImageUpload}
             progressShow={progressShow}
@@ -140,7 +171,7 @@ const AddConvoPageLayout = ({ convoData }) => {
             <TextField
               required
               fullWidth
-              label="Conversation Name"
+              label="Name"
               name="name"
               value={formData.name}
               onChange={handleChange}

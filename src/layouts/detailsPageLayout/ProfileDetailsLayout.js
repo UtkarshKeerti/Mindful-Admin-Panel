@@ -10,8 +10,6 @@ import {
   CircularProgress,
   Button,
   TextField,
-  Avatar,
-  LinearProgress
 } from '@mui/material';
 import ImageComponent from '../../components/imageComponent/ImageComponent';
 
@@ -30,7 +28,6 @@ const ProfileDetailsLayout = ({ layout }) => {
   const param = useParams();
 
   const [imageUpload, setImageUpload] = useState(); // file for firebase image upload
-  const [imageBlob, setImageBlob] = useState();   // BlobUrl for image preview.
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
@@ -73,13 +70,6 @@ const ProfileDetailsLayout = ({ layout }) => {
       ...formData,
       [e.target.name]: e.target.value
     })
-  }
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    const blobUrl = URL.createObjectURL(file);
-    setImageBlob(blobUrl) // image preview
-    setImageUpload(file) // firbase image upload
   }
 
   // To handle post/update API calls

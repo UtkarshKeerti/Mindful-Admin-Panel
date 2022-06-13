@@ -92,7 +92,7 @@ const Conversations = () => {
       <PageLayout
         pageData={conversationsCard}
         baseRoute={'/dashboard'}
-        setSelectedConvo={setSelectedConvo}
+        setSelectedCard={setSelectedConvo}
         setOpen={setOpen}
       />
 

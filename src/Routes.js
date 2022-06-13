@@ -38,7 +38,7 @@ const Routes = () => {
       children: [
         { path: 'convo', element: <Conversations /> },
         { path: ':id', element: <ConvoDetails /> },
-        { path: 'add-convo', element: <AddConvoPageLayout /> },
+        { path: 'add-convo', element: <AddConvoPageLayout layout={'conversation'} /> },
 
         { path: 'members', element: <Members /> },
         { path: 'member', element: <ProfileDetailsLayout layout={'member'} /> },
@@ -52,6 +52,9 @@ const Routes = () => {
         { path: 'event/:id', element: <DetailsPageLayout />, },
 
         { path: 'publications', element: <Publications /> },
+        { path: 'publication', element: <AddConvoPageLayout layout={'publication'} /> },
+        { path: 'publication/:id', element: <AddConvoPageLayout layout={'publication'} /> },
+
         { path: 'messages', element: <UserMessages /> },
 
       ]

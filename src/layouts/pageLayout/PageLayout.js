@@ -1,7 +1,4 @@
-import { useState } from 'react';
-import {
-  useNavigate
-} from 'react-router-dom'
+import React from 'react';
 import {
   Grid,
   Box,
@@ -11,7 +8,7 @@ import CardCustom from '../../components/cardCustom/CardCustom';
 
 import styles from './pageLayout.module.css';
 
-const PageLayout = ({ pageData, baseRoute, setSelectedConvo, setOpen }) => {
+const PageLayout = ({ pageData, baseRoute, setSelectedCard, setOpen }) => {
 
 
   return (
@@ -39,7 +36,7 @@ const PageLayout = ({ pageData, baseRoute, setSelectedConvo, setOpen }) => {
                       cardId={card._id}
                       baseRoute={baseRoute}
                       setOpenDialog={setOpen}
-                      setCardId={setSelectedConvo}
+                      setCardId={setSelectedCard}
                     />
                   </Grid>
                 )

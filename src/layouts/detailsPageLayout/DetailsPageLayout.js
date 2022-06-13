@@ -17,7 +17,6 @@ import {
   OutlinedInput,
   Checkbox,
   ListItemText,
-  LinearProgress
 } from '@mui/material';
 import ImageComponent from '../../components/imageComponent/ImageComponent';
 
@@ -64,7 +63,6 @@ const DetailsPageLayout = () => {
   }
 
   const [imageUpload, setImageUpload] = useState(); // file for firebase image upload
-  const [imageBlob, setImageBlob] = useState(); // blobUrl for image preview
   const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
@@ -103,14 +101,6 @@ const DetailsPageLayout = () => {
       })
     }
   }
-
-  const handleImgUpload = (e) => {
-    const file = e.target.files[0]
-    const blobUrl = URL.createObjectURL(file)
-    setImageBlob(blobUrl) // preview
-    setImageUpload(file) // for firebase file
-  }
-
 
   // Function to handle update or post event api calls
   const eventApiRequest = (reqBody) => {

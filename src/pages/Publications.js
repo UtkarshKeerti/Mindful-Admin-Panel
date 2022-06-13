@@ -3,42 +3,46 @@ import {
   Box,
   Button
 } from '@mui/material';
+import {
+  useNavigate
+} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import PageLayout from '../layouts/pageLayout/PageLayout';
+import DialogCustom from '../components/dialogCustom/DialogCustom';
+// Services
+import { getPublication, deletePublication } from '../services/PublicationService'
 
 const Publications = () => {
 
-  const [publicationsData, setPublicationsData] = useState()
-  useEffect(() => {
-    setPublicationsData([
-      {
-        name: 'Publication 001',
-        about: 'Design & culture description',
-        image: ''
-      },
-      {
-        name: 'PUBLICATION 00123',
-        about: 'Canada Celebrates folklore decription aso c,,a..sdio calks',
-        image: ''
-      },
-      {
-        name: 'Publication',
-        about: 'Publication some rnascnuasd description',
-        image: ''
-      },
-      {
-        name: 'folklore publication asnico ais dox',
-        about: 'Canada Celebrates folklore decription aso Celebrates folklore decription aso cio calks Celebrates folklore decription aso c',
-        image: ''
-      },
-      {
-        name: 'Publication Design & Culture',
-        about: 'Design & culture description',
-        image: ''
-      },
+  const navigate = useNavigate();
 
-    ])
+  const [publicationsData, setPublicationsData] = useState();
+  const [selectedPub, setSelectedPub] = useState('')
+  const [open, setOpen] = useState(false);
+
+  // Function to handle get publication API call
+  const getPublicationApiCall = () => {
+    setPublicationsData();
+    getPublication()
+      .then(res => {
+        if (!res) return console.log("Undefined response for Publications")
+        setPublicationsData(res)
+      })
+  }
+
+  useEffect(() => {
+    getPublicationApiCall()
   }, [])
+
+  const handleDelete = () => {
+    deletePublication(selectedPub)
+      .then(res => {
+        if (!res) return console.log("Undefined response while deleting a publication")
+        setOpen(false);
+        getPublicationApiCall()
+        alert(res.message);
+      })
+  }
 
   return (
     <>
@@ -47,13 +51,25 @@ const Publications = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={() => navigate('/dashboard/publication')}
         >
           Add
         </Button>
       </Box>
       <PageLayout
         pageData={publicationsData}
-        deleteDialogDesc={"This will delete the selected publication forever. Do you still want to continue?"}
+        baseRoute={'/dashboard/publication'}
+        setSelectedCard={setSelectedPub}
+        setOpen={setOpen}
+      />
+
+      <DialogCustom
+        title={"Are you sure?"}
+        btnText={"Delete anyway"}
+        description={"This action will delete the selected publication forever. Do you still want to continue?"}
+        onAgreeClick={handleDelete}
+        setOpen={setOpen}
+        open={open}
       />
     </>
   )
