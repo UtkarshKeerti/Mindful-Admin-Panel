@@ -19,6 +19,8 @@ import {
   ListItemText,
   LinearProgress
 } from '@mui/material';
+import ImageComponent from '../../components/imageComponent/ImageComponent';
+
 import SaveIcon from '@mui/icons-material/Save';
 // Service
 import { getEvents, updateEvent, postEvent } from '../../services/EventService';
@@ -147,7 +149,8 @@ const DetailsPageLayout = () => {
         eventApiRequest,
         setProgress,
         setProgressShow,
-        formData
+        formData,
+        setLoading
       )
     }
     else
@@ -187,39 +190,17 @@ const DetailsPageLayout = () => {
           sx={{ maxWidth: { md: 400, xs: '100%' } }}
           className={styles.imageContainer}
         >
-          <label htmlFor="upload-img" className={styles.imageLable}>
-            <input
-              id="upload-img"
-              type="file"
-              className={styles.imageInput}
-              onChange={handleImgUpload}
-            />
-            <img
-              src={
-                imageBlob ? imageBlob
-                  : formData.image ? formData.image
-                    : "https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder.png"
-              }
-              alt="uploaded-img"
-            />
-            {
-              progressShow &&
-              <span className={styles.backdropContainer}>
-                <span className={styles.progressContainer}>
-                  <p>{progress}%</p>
-                  <LinearProgress
-                    variant="determinate"
-                    value={progress}
-                    sx={{ width: '80%', m: '0 auto', borderRadius: '8px' }}
-                  />
-                </span>
-              </span>
-            }
-          </label>
+          <ImageComponent
+            inputId={'upload-img'}
+            formImage={formData.image}
+            setImageUpload={setImageUpload}
+            progressShow={progressShow}
+            progress={progress}
+          />
           <p className={styles.eventDateTime}>{`${formData.date} || ${formData.time}`}</p>
         </Grid>
         <Grid item xs={12} sm={7} className={styles.detailsContainer}>
-          <Box component={'form'} className={styles.formContainer}>
+          <Box component={'form'} onSubmit={handleSubmit} className={styles.formContainer}>
             <TextField
               required
               fullWidth
@@ -234,6 +215,7 @@ const DetailsPageLayout = () => {
               label="Description"
               name="description"
               multiline
+              minRows={4}
               maxRows={8}
               value={formData.description}
               onChange={handleChange}

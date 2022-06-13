@@ -8,29 +8,11 @@ import {
   CircularProgress
 } from '@mui/material';
 import CardCustom from '../../components/cardCustom/CardCustom';
-import DialogCustom from '../../components/dialogCustom/DialogCustom';
-// Service
-import { deleteConversation } from '../../services/ConversationService';
 
 import styles from './pageLayout.module.css';
 
-const PageLayout = ({ pageData, baseRoute, deleteDialogDesc }) => {
+const PageLayout = ({ pageData, baseRoute, setSelectedConvo, setOpen }) => {
 
-  const navigate = useNavigate();
-
-  const [selectedConvo, setSelectedConvo] = useState('');
-  const [open, setOpen] = useState(false);
-
-  const handleDelete = () => {
-    deleteConversation(selectedConvo)
-      .then(res => {
-        if (!res) return console.log('Undefined response while deleting conversation!')
-
-        setOpen(false);
-        navigate(0)
-        alert('Conversation deleted successfully!');
-      })
-  }
 
   return (
     <>
@@ -52,7 +34,7 @@ const PageLayout = ({ pageData, baseRoute, deleteDialogDesc }) => {
                   >
                     <CardCustom
                       heading={card.name}
-                      body={card.about && card.about}
+                      body={card.description}
                       image={card.image}
                       cardId={card._id}
                       baseRoute={baseRoute}
@@ -67,14 +49,6 @@ const PageLayout = ({ pageData, baseRoute, deleteDialogDesc }) => {
             <CircularProgress size={50} />
           </Box>
       }
-      <DialogCustom
-        title={"Are you sure?"}
-        btnText={"Delete Anyway"}
-        description={deleteDialogDesc}
-        onAgreeClick={handleDelete}
-        setOpen={setOpen}
-        open={open}
-      />
     </>
   )
 }

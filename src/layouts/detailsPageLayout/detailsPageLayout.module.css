@@ -2,31 +2,9 @@
   max-width: 1440px;
 }
 
-.imageLable {
-  position: relative;
-  max-width: 100%;
-  border-radius: 10px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
-
-.imageInput {
-  position: absolute;
-  display: none;
-}
-
-.imageContainer img {
-  width: 100%;
-  box-shadow: var(--box-shadow-2);
-}
-
 .pageWrapper .detailsContainer {
   max-width: 800px;
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 
 .eventDateTime {
@@ -46,18 +24,8 @@
   margin-bottom: 1rem;
 }
 
-.backdropContainer {
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-
-.progressContainer {
-  width: 100%;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #ffffff;
+@media screen and (max-width: 900px) {
+  .pageWrapper .detailsContainer {
+    margin-left: 0;
+  }
 }

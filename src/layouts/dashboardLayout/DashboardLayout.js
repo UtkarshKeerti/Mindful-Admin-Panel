@@ -39,7 +39,7 @@ const DashboardLayout = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  const [adminSession, setAdminSession] = useState(JSON.parse(sessionStorage.getItem('adminUser')))
+  const adminSession = JSON.parse(sessionStorage.getItem('adminUser'))
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

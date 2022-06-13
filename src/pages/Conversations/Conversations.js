@@ -3,12 +3,18 @@ import {
   Box,
   Button
 } from '@mui/material';
+import {
+  useNavigate
+} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import PageLayout from '../../layouts/pageLayout/PageLayout';
+import DialogCustom from '../../components/dialogCustom/DialogCustom';
 // Services
-import { getConversations } from '../../services/ConversationService';
+import { getConversations, deleteConversation } from '../../services/ConversationService';
 
 const Conversations = () => {
+
+  const navigate = useNavigate();
 
   // const conversationsCard = [
   //   {
@@ -42,20 +48,34 @@ const Conversations = () => {
   //     image: ''
   //   },
   // ]
-  const [conversationsCard, setConversationsCard] = useState()
+  const [conversationsCard, setConversationsCard] = useState();
 
-  useEffect(() => {
-    // !sessionStorage.getItem('conversations') ?
-    // Get Conversation API Call
+  // Get Conversation API Call
+  const getConvoApiCall = () => {
+    setConversationsCard()
     getConversations()
       .then((res) => {
         if (!res) return console.log('Undefined response for Conversations!')
         setConversationsCard(res)
-        sessionStorage.setItem('conversations', JSON.stringify(res));
       })
-    // : setConversationsCard(JSON.parse(sessionStorage.getItem('conversations')))
+  }
 
+  useEffect(() => {
+    getConvoApiCall()
   }, [])
+
+  const [selectedConvo, setSelectedConvo] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const handleDelete = () => {
+    deleteConversation(selectedConvo)
+      .then(res => {
+        if (!res) return console.log('Undefined response while deleting conversation!')
+        setOpen(false);
+        getConvoApiCall()
+        alert('Conversation deleted successfully!');
+      })
+  }
 
   return (
     <>
@@ -64,6 +84,7 @@ const Conversations = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={() => navigate('/dashboard/add-convo')}
         >
           Add
         </Button>
@@ -71,7 +92,17 @@ const Conversations = () => {
       <PageLayout
         pageData={conversationsCard}
         baseRoute={'/dashboard'}
-        deleteDialogDesc={"This will delete the selected conversation along with all the Events under it forever. Do you still want to continue?"}
+        setSelectedConvo={setSelectedConvo}
+        setOpen={setOpen}
+      />
+
+      <DialogCustom
+        title={"Are you sure?"}
+        btnText={"Delete Anyway"}
+        description={"This will delete the selected conversation along with all the Events under it forever. Do you still want to continue?"}
+        onAgreeClick={handleDelete}
+        setOpen={setOpen}
+        open={open}
       />
     </>
   )

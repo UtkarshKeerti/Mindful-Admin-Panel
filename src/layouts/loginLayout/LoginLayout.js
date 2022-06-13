@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Grid,
   Avatar,
@@ -20,7 +20,7 @@ const LoginLayout = () => {
 
   const navigate = useNavigate();
 
-  const [adminSession, setAdminSession] = useState(JSON.parse(sessionStorage.getItem('adminUser')))
+  const adminSession = JSON.parse(sessionStorage.getItem('adminUser'))
 
   useEffect(() => {
     if ((adminSession && adminSession.token)) return navigate('/dashboard/convo')

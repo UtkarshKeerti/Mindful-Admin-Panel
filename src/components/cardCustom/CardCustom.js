@@ -11,6 +11,7 @@ import {
   Button,
   Typography
 } from '@mui/material';
+import placeholderImage from '../../assets/images/placeholder.png'
 
 import styles from './cardCustom.module.css'
 
@@ -38,7 +39,7 @@ const CardCustom = ({ cardId, heading, body, image, baseRoute, setOpenDialog, se
           <CardMedia
             component="img"
             height={"140"}
-            image={image ? image : `https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder.png`}
+            image={image ? image : placeholderImage}
             alt=""
           />
           <CardContent>
@@ -50,16 +51,15 @@ const CardCustom = ({ cardId, heading, body, image, baseRoute, setOpenDialog, se
             >
               {heading}
             </Typography>
-            {
-              body &&
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                className={styles.body}
-              >
-                {truncate(body, 60)}
-              </Typography>
-            }
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              className={styles.body}
+            >
+              {
+                body && truncate(body, 60)
+              }
+            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>

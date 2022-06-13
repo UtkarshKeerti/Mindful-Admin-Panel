@@ -1,0 +1,38 @@
+.imageLabel {
+  position: relative;
+  max-width: 100%;
+  border-radius: 8px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  box-shadow: var(--box-shadow-2);
+}
+
+.imageInput {
+  position: absolute;
+  display: none;
+}
+
+.imageLabel img {
+  min-width: 100%;
+}
+
+.backdropContainer {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.progressContainer {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffffff;
+}

@@ -13,6 +13,8 @@ import {
   Avatar,
   LinearProgress
 } from '@mui/material';
+import ImageComponent from '../../components/imageComponent/ImageComponent';
+
 import SaveIcon from '@mui/icons-material/Save';
 // Service
 import { getSpeakers, addSpeaker, updateSpeaker } from '../../services/SpeakerService';
@@ -135,7 +137,8 @@ const ProfileDetailsLayout = ({ layout }) => {
         profileApiRequest,
         setProgress,
         setpProgressShow,
-        formData
+        formData,
+        setLoading
       )
     } else
       profileApiRequest(formData);
@@ -171,41 +174,20 @@ const ProfileDetailsLayout = ({ layout }) => {
           sx={{ maxWidth: { md: '250px', xs: '100%' } }}
           className={styles.profileImageContainer}
         >
-          <label htmlFor="upload-profile-img" className={styles.imageLable}>
-            <input
-              id="upload-profile-img"
-              type="file"
-              className={styles.imageInput}
-              onChange={handleImageUpload}
-            />
-            <Avatar
-              src={
-                imageBlob ? imageBlob
-                  : formData.image ? formData.image
-                    : ""
-              }
-              sx={{ width: 200, height: 200, margin: { md: '0', xs: "auto" } }}
-            />
-            {
-              progressShow &&
-              <span className={styles.backdropContainer}>
-                <span className={styles.progressContainer}>
-                  <p>{progress}%</p>
-                  <LinearProgress
-                    variant="determinate"
-                    value={progress}
-                    sx={{ width: '80%', m: '0 auto', borderRadius: '8px' }}
-                  />
-                </span>
-              </span>
-            }
-          </label>
+          <ImageComponent
+            inputId={'upload-img'}
+            formImage={formData.image}
+            setImageUpload={setImageUpload}
+            progressShow={progressShow}
+            progress={progress}
+            isProfile
+          />
         </Grid>
 
         {
           formData &&
           <Grid item xs={12} md={7} className={styles.detailsContainer}>
-            <Box component={'form'} className={styles.formContainer}>
+            <Box component={'form'} onSubmit={handleSubmit} className={styles.formContainer}>
               <TextField
                 required
                 fullWidth
@@ -222,7 +204,7 @@ const ProfileDetailsLayout = ({ layout }) => {
                   label="Title"
                   name="title"
                   multiline
-                  maxRows={8}
+                  maxRows={3}
                   value={formData.title}
                   onChange={handleChange}
                   className={styles.formInput}
@@ -233,7 +215,8 @@ const ProfileDetailsLayout = ({ layout }) => {
                 label="About"
                 name="about"
                 multiline
-                maxRows={10}
+                minRows={4}
+                maxRows={8}
                 value={formData.about}
                 onChange={handleChange}
                 className={styles.formInput}

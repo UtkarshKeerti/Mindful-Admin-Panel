@@ -8,6 +8,7 @@ import DashboardLayout from './layouts/dashboardLayout/DashboardLayout';
 import AuthLayout from './layouts/authLayout/AuthLayout';
 import DetailsPageLayout from './layouts/detailsPageLayout/DetailsPageLayout';
 import ProfileDetailsLayout from './layouts/detailsPageLayout/ProfileDetailsLayout';
+import AddConvoPageLayout from './layouts/detailsPageLayout/AddConvoPageLayout';
 
 // Pages
 import Login from './pages/Login';
@@ -20,8 +21,6 @@ import Publications from './pages/Publications';
 import UserMessages from './pages/UserMessages';
 import Page404 from './pages/Page404';
 
-import Colorpallete from './components/Colorpallete';
-
 const Routes = () => {
   return useRoutes([
     {
@@ -31,7 +30,6 @@ const Routes = () => {
         { path: '/', element: <Login /> },
         { path: 'reset', element: <ResetPassword /> },
         { path: '404', element: <Page404 /> },
-        { path: 'colors', element: <Colorpallete /> }
       ]
     },
     {
@@ -40,6 +38,7 @@ const Routes = () => {
       children: [
         { path: 'convo', element: <Conversations /> },
         { path: ':id', element: <ConvoDetails /> },
+        { path: 'add-convo', element: <AddConvoPageLayout /> },
 
         { path: 'members', element: <Members /> },
         { path: 'member', element: <ProfileDetailsLayout layout={'member'} /> },

@@ -4,7 +4,15 @@ import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 // To upload image in Bucket
 // All arguments are required for image upload to work.
-export const uploadImageToBucket = (imageFile, subFolder, apiCallFunc, setProgress, setProgressShow, formData) => {
+export const uploadImageToBucket = (
+  imageFile,
+  subFolder,
+  apiCallFunc,
+  setProgress,
+  setProgressShow,
+  formData,
+  setLoading
+) => {
   // console.log("uploading File")
   setProgressShow(true)
 
@@ -33,6 +41,9 @@ export const uploadImageToBucket = (imageFile, subFolder, apiCallFunc, setProgre
     },
     (error) => {
       console.log("ERROR while uploading image", error);
+      alert("Access denied, please re-login and try again")
+      setProgressShow(false)
+      setLoading(false)
     },
     () => {
       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
@@ -45,6 +56,7 @@ export const uploadImageToBucket = (imageFile, subFolder, apiCallFunc, setProgre
         }
         apiCallFunc(obj);
         setProgressShow(false)
+        setLoading(false)
       });
     }
   )

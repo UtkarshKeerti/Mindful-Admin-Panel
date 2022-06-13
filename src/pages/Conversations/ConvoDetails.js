@@ -9,22 +9,30 @@ import {
 import TabsCustom from '../../components/TabsCustom/TabsCustom';
 import EventsLayout from '../../layouts/eventsLayout/EventsLayout';
 import EventSpeakersLayout from '../../layouts/eventSpeakersLayout/EventSpeakersLayout';
+import AddConvoPageLayout from '../../layouts/detailsPageLayout/AddConvoPageLayout';
 // Service
 import { getConversations } from '../../services/ConversationService';
 
 const ConvoDetails = () => {
 
   const param = useParams();
-  const [convoDetails, setConvoDetails] = useState();
+  const [convoDetails, setConvoDetails] = useState({
+    name: "",
+    image: "",
+    description: ""
+  });
   const [eventsRow, setEventsRow] = useState();
   const [speakersRow, setSpeakersRow] = useState();
-
 
   useEffect(() => {
     getConversations(param.id)
       .then((res) => {
         if (res) {
-          setConvoDetails(res)
+          setConvoDetails({
+            name: res.name,
+            image: res.image,
+            description: res.description
+          })
 
           let tempEventArray = [];
           res.events.forEach((item) => {
@@ -48,6 +56,8 @@ const ConvoDetails = () => {
             tempSpeakerArray.push(rowData)
           });
           setSpeakersRow(tempSpeakerArray)
+
+
         }
       })
   }, [param.id])
@@ -63,7 +73,7 @@ const ConvoDetails = () => {
     },
     {
       label: 'About',
-      component: 'About',
+      component: <AddConvoPageLayout convoData={convoDetails} />,
     },
   ]
 
