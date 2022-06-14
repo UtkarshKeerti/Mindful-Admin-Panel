@@ -5,7 +5,7 @@ import {
 import { DataGrid } from '@mui/x-data-grid';
 import styles from './tableCustom.module.css';
 
-const TableDataGrid = ({ checkbox, tableColumns, tableRows, rowsPerPageOptions, baseRoute, setSelectedRows }) => {
+const TableDataGrid = ({ checkbox, tableColumns, tableRows, baseRoute, setSelectedRows }) => {
 
   const navigate = useNavigate();
   const [pageSize, setPageSize] = useState(10)

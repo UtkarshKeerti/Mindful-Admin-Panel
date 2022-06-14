@@ -9,6 +9,7 @@ import AuthLayout from './layouts/authLayout/AuthLayout';
 import DetailsPageLayout from './layouts/detailsPageLayout/DetailsPageLayout';
 import ProfileDetailsLayout from './layouts/detailsPageLayout/ProfileDetailsLayout';
 import AddConvoPageLayout from './layouts/detailsPageLayout/AddConvoPageLayout';
+import MessageDetailsLayout from './layouts/detailsPageLayout/MessageDetailsLayout';
 
 // Pages
 import Login from './pages/Login';
@@ -56,6 +57,7 @@ const Routes = () => {
         { path: 'publication/:id', element: <AddConvoPageLayout layout={'publication'} /> },
 
         { path: 'messages', element: <UserMessages /> },
+        { path: 'message/:id', element: <UserMessages /> },
 
       ]
     },

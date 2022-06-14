@@ -11,7 +11,7 @@ import DialogCustom from '../components/dialogCustom/DialogCustom';
 // Icon
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
-// Service
+// Services
 import { getSpeakers, deleteSpeaker } from '../services/SpeakerService';
 
 const Speakers = () => {
