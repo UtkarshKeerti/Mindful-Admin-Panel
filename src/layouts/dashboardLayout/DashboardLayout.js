@@ -51,8 +51,8 @@ const DashboardLayout = (props) => {
     sessionStorage.clear();
     navigate('/')
   }
-  useEffect(() => {
 
+  useEffect(() => {
     if (!(adminSession && adminSession.token)) return navigate('/')
 
     getSpeakers()

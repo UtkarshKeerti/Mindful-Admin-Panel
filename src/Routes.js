@@ -57,7 +57,7 @@ const Routes = () => {
         { path: 'publication/:id', element: <AddConvoPageLayout layout={'publication'} /> },
 
         { path: 'messages', element: <UserMessages /> },
-        { path: 'message/:id', element: <UserMessages /> },
+        { path: 'message/:id', element: <MessageDetailsLayout /> },
 
       ]
     },

@@ -3,6 +3,7 @@ import {
   Box,
   Button
 } from '@mui/material';
+import moment from 'moment'
 import TableDataGrid from '../components/tableCustom/TableDataGrid';
 import DialogCustom from '../components/dialogCustom/DialogCustom';
 // Icons
@@ -19,6 +20,11 @@ const UserMessages = () => {
       width: 60
     },
     {
+      field: 'date',
+      headerName: 'Date',
+      width: 200
+    },
+    {
       field: 'name',
       headerName: 'Name',
       width: 280
@@ -26,17 +32,12 @@ const UserMessages = () => {
     {
       field: 'email',
       headerName: 'Email',
-      width: 250
+      width: 280
     },
     {
       field: 'subject',
       headerName: 'Subject',
-      width: 300
-    },
-    {
-      field: 'message',
-      headerName: 'Message',
-      width: 400
+      width: 500
     },
   ]
 
@@ -52,9 +53,9 @@ const UserMessages = () => {
           const msgRow = {
             id: msg._id,
             name: msg.name,
+            date: moment(msg.createdAt).format('Do MMM YY'),
             email: msg.email,
             subject: msg.subject,
-            message: msg.message
           }
           tempArray.push(msgRow);
         })
@@ -105,6 +106,7 @@ const UserMessages = () => {
         tableColumns={tableHeading}
         rowsPerPageOptions={15}
         checkbox
+        baseRoute={"/dashboard/message"}
         setSelectedRows={setSelectedRows}
       />
 
