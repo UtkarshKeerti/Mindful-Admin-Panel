@@ -34,6 +34,7 @@ const LoginLayout = () => {
   const [loginError, setLoginError] = useState('');
 
   const handleChange = (e) => {
+    setLoginError('')
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value
@@ -47,14 +48,19 @@ const LoginLayout = () => {
     if (loginData.email && loginData.password) {
       adminLogin(loginData)
         .then(res => {
-          if (!res) return console.log('Undefined response - Admin login')
+          setLoader(false)
+          if (!res) return alert("Something went wrong, try again")
+
+          if (!res.token) {
+            setLoginError(res.message)
+            return
+          }
 
           // Sign in to firebase app
           signInFirebase(loginData)
 
           sessionStorage.setItem('adminUser', JSON.stringify(res))
           navigate('/dashboard/convo')
-          setLoader(false)
         })
     } else {
       setLoginError('All fields are required!')
@@ -92,6 +98,7 @@ const LoginLayout = () => {
             component="form"
           >
             <TextField
+              type={"email"}
               required
               fullWidth
               variant="outlined"
@@ -99,7 +106,7 @@ const LoginLayout = () => {
               name={'email'}
               className={styles.textField}
               value={loginData.email}
-              error={loginError && !loginData.email ? true : false}
+              error={loginError ? true : false}
               onChange={handleChange}
             // InputProps={{
             //   readOnly: true,
@@ -114,8 +121,8 @@ const LoginLayout = () => {
               type='password'
               value={loginData.password}
               onChange={handleChange}
-              error={loginError && !loginData.password ? true : false}
-              helperText={loginError && !loginData.password ? loginError : ""}
+              error={loginError ? true : false}
+              helperText={loginError}
             />
             <ButtonCustom
               primary
